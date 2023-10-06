@@ -1,10 +1,35 @@
-/*
- * Global stylesheet
- */
-
-header > a {
-    text-decoration: none;
+/* ****** */
+/* Global */
+/* ****** */
+main {
+    margin: 2rem 1rem 0 1rem;
+    padding-bottom: 4rem;
+    display: block;
+    position: relative;
 }
+
+body {
+    background-color: #bbbbbb;
+    position: relative;
+    min-height: 100vh;
+}
+
+
+/* ****** */
+/* Footer */
+/* ****** */
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 3rem;
+    background-color: #f6bbc4;
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 15px;
+}
+
 
 /* ****** */
 /* Navbar */
@@ -16,9 +41,8 @@ header {
   
 header a {
     color: #ffffff;
-    text-align: left;
     font-size: 1rem;
-    margin-right: 30px;
+    margin-right: 2rem;
 }
 
 header a.active {
@@ -30,9 +54,17 @@ header a:hover {
     color: #fff2b3;
 }
 
+header > a {
+    text-decoration: none;
+}
+
 .logo {
     font-size: x-large;
     font-weight: 500;
+}
+
+.float-right {
+    float: right;
 }
 
 /* ************* */
@@ -41,7 +73,9 @@ header a:hover {
 .notif_button {
     display: inline-block;
     position: relative;
+    margin-top: 0.5rem;
 }
+
 .notif_button .badge {
     position: absolute;
     top: -10px;
@@ -50,3 +84,51 @@ header a:hover {
     background: red;
     color: white;
 }
+
+.notif_button:hover {
+    filter: invert(10%) sepia(23%) saturate(405%) hue-rotate(317deg) brightness(103%) contrast(105%);
+}
+
+
+/* ************ */
+/* Edit Profile */
+/* ************ */
+.profile-pic {
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    background-size: cover;
+    overflow: hidden;
+    display: block;
+    margin: auto;
+    /* For the text and blurring: */
+    background-blend-mode: multiply;
+    color: transparent;
+    text-align: center;
+}
+
+.profile-pic:hover {
+    background-color: rgba(0,0,0,.5);
+    z-index: 10000;
+    color: white;
+    transition: all .3s ease;
+    cursor: pointer;
+}
+
+.profile-pic span {
+    display: inline-block;
+    margin-top: 88px;
+}
+
+#shelterPic {
+    background-image: url('../images/sample_shelter_pic.png');
+}
+
+#seekerPic {
+    background-image: url('../images/seeker_pic.png');
+}
+
+#editShelterPic, #editSeekerPic {
+    display: none;
+}
+
