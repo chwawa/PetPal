@@ -1,0 +1,52 @@
+/*
+ * Global stylesheet
+ */
+
+header > a {
+    text-decoration: none;
+}
+
+/* ****** */
+/* Navbar */
+/* ****** */
+header {
+    background-color: #f6bbc4;
+    padding: 25px;  
+}
+  
+header a {
+    color: #ffffff;
+    text-align: left;
+    font-size: 1rem;
+    margin-right: 30px;
+}
+
+header a.active {
+    font-weight: bold;
+    color: #fded9f;
+}
+
+header a:hover {
+    color: #fff2b3;
+}
+
+.logo {
+    font-size: x-large;
+    font-weight: 500;
+}
+
+/* ************* */
+/* Notifications */
+/* ************* */
+.notif_button {
+    display: inline-block;
+    position: relative;
+}
+.notif_button .badge {
+    position: absolute;
+    top: -10px;
+    right: -20px;
+    border-radius: 100%;
+    background: red;
+    color: white;
+}
