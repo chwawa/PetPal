@@ -1,3 +1,11 @@
+/* Table of contents:
+
+    1. Styling applied to every page
+    2. Components
+    3. Page-specific styling
+
+*/
+
 /* ****** */
 /* Global */
 /* ****** */
@@ -9,11 +17,22 @@ main {
 }
 
 body {
-    background-color: #bbbbbb;
+    background-color: #fcf9f6 !important;
     position: relative;
     min-height: 100vh;
 }
 
+/* ************************************************************ */
+/* ************************ COMPONENTS ************************ */
+/* ************************************************************ */
+
+/* ***** */
+/* Cards */
+/* ***** */
+.card-image {
+    height: 20rem;
+    object-fit: cover;
+}
 
 /* ****** */
 /* Footer */
@@ -67,9 +86,7 @@ header > a {
     float: right;
 }
 
-/* ************* */
-/* Notifications */
-/* ************* */
+/* Notifications button */
 .notif_button {
     display: inline-block;
     position: relative;
@@ -89,6 +106,10 @@ header > a {
     filter: invert(10%) sepia(23%) saturate(405%) hue-rotate(317deg) brightness(103%) contrast(105%);
 }
 
+
+/* *************************************************************** */
+/* ************************ PAGE-SPECIFIC ************************ */
+/* *************************************************************** */
 
 /* ************ */
 /* Edit Profile */
@@ -131,4 +152,3 @@ header > a {
 #editShelterPic, #editSeekerPic {
     display: none;
 }
-
