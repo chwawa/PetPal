@@ -161,3 +161,26 @@ header > a {
 #editShelterPic, #editSeekerPic {
     display: none;
 }
+
+/* ************ */
+/* Pet Adoption */
+/* ************ */
+.required {
+    font-size: 10px;
+    color: red;
+    font-weight: bold;
+}
+
+
+.about {
+    margin-bottom: 32px;
+}
+
+.desc {
+    margin-bottom: 15px;
+}
+
+.date{
+    margin-top: 5px;
+    margin-right: -10px;
+}
