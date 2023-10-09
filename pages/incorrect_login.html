@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Signup</title>
+    <title>Login</title>
     <link href="../css/landing_style.css" rel="stylesheet" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -14,39 +14,16 @@
   </head>
   <body>
     <header>
-      <a href="#">
+      <a href="#" class="logo">
         PetPal
         <img src="../svg/logo.svg" />
       </a>
     </header>
-
     <body>
       <div class="login-container">
         <div class="login-box">
-          <h2>Sign up</h2>
+          <h2>Login</h2>
           <form>
-            <div class="form-group fariha">
-              <div class="radio-option">
-                <input
-                  type="radio"
-                  id="option1"
-                  name="option"
-                  value="dog"
-                  required
-                />
-                <label for="option1">Pet Seeker</label>
-              </div>
-              <div class="radio-option">
-                <input
-                  type="radio"
-                  id="option2"
-                  name="option"
-                  value="cat"
-                  required
-                />
-                <label for="option2">Pet Shelter</label>
-              </div>
-            </div>
             <div class="form-group">
               <label for="email">Email:</label>
               <input
@@ -64,20 +41,12 @@
                 name="password"
                 placeholder="Enter your password"
               />
+              <div class="error-message">Invalid email or password.</div>
             </div>
-            <div class="form-group">
-              <label for="password">Confirm Password:</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Re-Enter your password"
-              />
-            </div>
-            <a href="incorrect_signup.html" class="loginbutton">Sign Up</a>
+            <a href="landing.html" class="loginbutton">Log in</a>
           </form>
-          <p class="logpara">
-            Already have an account? <a href="login.html">Log in</a>
+          <p>
+            Don't have an account? <a href="signup.html">Create an account</a>
           </p>
         </div>
       </div>
