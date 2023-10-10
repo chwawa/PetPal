@@ -184,3 +184,79 @@ header > a {
     margin-top: 5px;
     margin-right: -10px;
 }
+
+/* ************ */
+/* Pet Creation */
+/* ************ */
+
+.form-row {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 1rem;
+}
+.form-row1 {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 1rem;
+}
+/* ************ */
+/* Shelter Detail */
+/* ************ */
+i {
+    margin-right: 10px;
+}
+#logo {
+    width: 200px;
+    height: 200px;
+}
+.row a {
+    text-decoration: none;
+}
+.mission p{
+    text-align: justify;
+}
+.heading {
+    font-size: 25px;
+    margin-right: 25px;
+}
+.fa {
+    font-size: 25px;
+}
+.checked {
+    color: gold;
+}
+.container1 {
+    border: 2px solid #ccc;
+    background-color: #eee;
+    border-radius: 5px;
+    padding: 16px;
+    margin: 16px 0;
+}
+.container1 img {
+    float: left;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+.container1 span{
+    font-size: 20px;
+    margin-right: 15px;
+}
+.response {
+    padding-left: 50px;
+}
+
+/* ************ */
+/* Pet Update */
+/* ************ */
+.image-container {
+    overflow-x: auto;
+    white-space: nowrap; 
+}
+.image-item {
+    display: inline-block;
+    margin-right: 10px; 
+}
+.image-item img {
+    max-width: 100px; 
+    height: auto;
+}
