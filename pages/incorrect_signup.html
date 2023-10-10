@@ -25,6 +25,14 @@
         <div class="login-box">
           <h2>Sign up</h2>
           <form>
+            <!-- <div class="form-group">
+              <label for="options">Pet Seeker or Pet Shelters:</label>
+              <select id="option" name="option">
+                <option value="" selected disabled></option>
+                <option value="dog">Pet Seeker</option>
+                <option value="cat">Pet Shelter</option>
+              </select>
+            </div> -->
             <div class="form-group extend">
               <div class="radio-option">
                 <input
@@ -55,6 +63,7 @@
                 name="email"
                 placeholder="Enter your email"
               />
+              <div class="error-message">Email address already in use.</div>
             </div>
             <div class="form-group">
               <label for="password">Password:</label>
@@ -64,6 +73,9 @@
                 name="password"
                 placeholder="Enter your password"
               />
+              <div class="error-message">
+                Password should be between 8-20 letters.
+              </div>
             </div>
             <div class="form-group">
               <label for="password">Confirm Password:</label>
@@ -74,7 +86,7 @@
                 placeholder="Re-Enter your password"
               />
             </div>
-            <a href="incorrect_signup.html" class="loginbutton">Sign Up</a>
+            <a href="login.html" class="loginbutton">Sign Up</a>
           </form>
           <p class="logpara">
             Already have an account? <a href="login.html">Log in</a>
