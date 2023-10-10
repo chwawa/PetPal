@@ -206,6 +206,7 @@ header > a {
   border-radius: 10px;
   overflow: hidden;
   color: black;
+  cursor: pointer;
 }
 
 .animal-text {
