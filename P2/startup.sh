@@ -1,5 +1,7 @@
 #! /bin/sh
 
+cd PetPal
+
 virtualenv venv
 source venv/bin/activate
 
