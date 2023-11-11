@@ -10,11 +10,14 @@ class Notification(models.Model):
     creation_time = models.DateTimeField()
     is_read = models.BooleanField(default=False)
     message = models.TextField()
+ 
     link = models.URLField(blank=True, null=True)
 
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()
+
+# notifications = models.ManyToManyField(Notification)
 
 # class SeekerNotification(models.Model):
 #     creation_time = models.DateTimeField()
