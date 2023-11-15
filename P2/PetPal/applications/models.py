@@ -4,7 +4,8 @@ from accounts.models import CustomUser
 
 # Create your models here.
 class Application(models.Model):
-    applicant = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="applications")
+    applicant = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="applications_applicant")
+    shelter = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="applications_shelter")
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     # dob = models.DateField(default="2006-10-25")

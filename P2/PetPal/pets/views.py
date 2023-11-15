@@ -3,12 +3,14 @@ from rest_framework import generics
 from .models import Pet
 from .serializers import PetSerializer
 from .filters import PetFilter
-from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated,SAFE_METHODS
 from .permissions import IsShelterUser
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
+from notifications.models import Notification
+from django.urls import reverse
+from accounts.models import CustomUser
 
 class PetPagination(PageNumberPagination):
     page_size = 10
@@ -21,8 +23,15 @@ class PetCreateView(CreateAPIView):
     permission_classes = [IsAuthenticated, IsShelterUser]
 
     def perform_create(self, serializer):
-        serializer.save(shelter=self.request.user)
+        new_pet = serializer.save(shelter=self.request.user)
 
+        # Create notification for new pet listing if user has preferences on
+        message = f"{self.request.user} created a new pet listing."
+        link = reverse("pets:pet-detail", kwargs={'pk':new_pet.id})
+        seekers = CustomUser.objects.all().filter(user_type='seeker', new_pet_listing_pref='yes')
+        for s in seekers:
+            Notification(user=s, message=message, link=link).save()
+        
 class PetRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Pet.objects.all()
     serializer_class = PetSerializer
@@ -89,3 +98,4 @@ class PetListSearch(ListAPIView):
                 query_filter |= Q(size=size)
             queryset = queryset.filter(query_filter)
         return queryset
+    

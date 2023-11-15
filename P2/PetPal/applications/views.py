@@ -38,7 +38,13 @@ class ApplicationView(APIView):
             return Response({'error': 'Pet is not available for adoption.'}, status=status.HTTP_400_BAD_REQUEST)
         serializer = ApplicationSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(pet=pet, applicant=request.user)
+            new_app = serializer.save(pet=pet, applicant=request.user, shelter=pet.shelter)
+
+            # Create notification for new application
+            message = f"A new application for {pet.name} has been created by {request.user.name}."
+            link = reverse("applications:application-detail", kwargs={'application_id': new_app.id})
+            Notification(user=pet.shelter, message=message, link=link).save()
+            
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -53,12 +59,13 @@ class ApplicationUpdateView(APIView):
         if (request.user.user_type == 'shelter' and application.PENDING) or (request.user.user_type == 'seeker' and application.PENDING or application.ACCEPTED):
             serializer = ApplicationUpdateSerializer(application, data=request.data)
             if serializer.is_valid():
-                serializer.save()
+                app = serializer.save()
 
                 # Create notification for application update
                 message = "An application's status has been updated."
-                link = reverse("applications:application_update")
-                Notification(user=request.user, message=message, link=link)
+                link = reverse("applications:application-detail", kwargs={'application_id': app.id})
+                Notification(user=request.user, message=message, link=link).save()
+                Notification(user=application.shelter, message=message, link=link).save()
 
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

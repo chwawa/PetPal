@@ -47,7 +47,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=False)
     class Meta:
         model = CustomUser
-        fields = ['username', 'password', 'repeat_password', 'name', 'profile_pic', 'email', 'phone', 'location', 'about']
+        fields = ['username', 'password', 'repeat_password', 'name', 'profile_pic', 'email', 'phone', 'location', 'about', 'new_pet_listing_pref']
     
     def validate(self, data):
         pwd1 = data.get('password')
@@ -92,4 +92,4 @@ class UserUpdateSerializer(serializers.ModelSerializer):
 class UserDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['name', 'profile_pic', 'email', 'phone', 'location', 'about' ]
+        fields = ['name', 'profile_pic', 'email', 'phone', 'location', 'about', 'new_pet_listing_pref' ]

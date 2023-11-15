@@ -31,5 +31,3 @@ class Pet(models.Model):
     size = models.CharField(max_length=1, choices=SIZE_CHOICES, default='s')
     location = models.CharField(max_length=255)
     shelter = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="pets")
-
-

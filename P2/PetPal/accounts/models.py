@@ -8,6 +8,13 @@ class CustomUser(AbstractUser):
     phone = models.CharField(max_length=15, null=True, blank=True)
     location = models.CharField(max_length=255, null=True, blank=True)
     about = models.TextField(null=True, blank=True)
+
+    NEW_PET_LISTING_PREF = [
+        ('yes', 'Yes'),
+        ('no', 'No'),
+    ]
+    new_pet_listing_pref = models.CharField(max_length=3, choices=NEW_PET_LISTING_PREF, default='yes')
+
     USER_TYPE_CHOICES = [
         ('seeker', 'Seeker'),
         ('shelter', 'Shelter'),
