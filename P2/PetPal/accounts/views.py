@@ -48,16 +48,17 @@ class UserDetailView(generics.RetrieveAPIView):
     serializer_class = UserDetailSerializer
     permission_classes = [IsAuthenticated]
     def get_object(self):
-        # need to add more conditions here once application is done
         profile = get_object_or_404(CustomUser, id=self.kwargs['pk'])
         if profile.user_type == 'shelter':
             return profile
         else:
-            application = Application.objects.get(applicant=profile)
-            if (application.pet.shelter == self.request.user and application.PENDING == True) or (profile == self.request.user):
+            if profile == self.request.user:
                 return profile
-            else:
-                raise PermissionDenied("You do not have permission to perform this action.")
+            if self.request.user.user_type == "shelter":
+                application = get_object_or_404(Application, applicant=profile)
+                if application.pet.shelter == self.request.user and application.PENDING == True and application.ACCEPTED == False and application.DENIED == False and application.WITHDRAWN == False:
+                    return profile
+            raise PermissionDenied("You do not have permission to perform this action.")
         
 class ListView(generics.ListAPIView):
     serializer_class = UserDetailSerializer
@@ -70,10 +71,14 @@ class ListView(generics.ListAPIView):
 class DeleteView(generics.DestroyAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+    queryset = CustomUser.objects.all()
     def perform_destroy(self, instance):
-        if instance.user_type == 'shelter':
-            instance.Pet_set.all().delete()
+        if instance == self.request.user:
+            if instance.user_type == 'shelter':
+                instance.pets.all().delete()
+            else:
+                instance.applications.all().delete()
+            instance.notifications.all().delete()
+            instance.delete()
         else:
-            instance.Application_set.all().delete()
-        instance.Notification_set.all().delete()
-        instance.delete()
+            raise PermissionDenied("You do not have permission to perform this action.")
