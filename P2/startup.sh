@@ -13,6 +13,7 @@ python3 -m pip install --upgrade Pillow
 pip3 install djangorestframework
 
 pip3 install djangorestframework-simplejwt
+pip3 install setuptools
 
 pip3 install django-filter
 
