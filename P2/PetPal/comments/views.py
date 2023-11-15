@@ -20,12 +20,12 @@ class ShelterCommentListCreateAPIView(ListCreateAPIView):
     pagination_class = SetPaginationComments
 
     def perform_create(self, serializer):
-        new_review = serializer.save(commenter=self.request.user, 
+        serializer.save(commenter=self.request.user, 
                         shelter=CustomUser.objects.get(id=self.kwargs['pk'], user_type='shelter'))
         
         # Create notification for new shelter review
         message = "You received a review."
-        link = reverse("comments:shelter-comment-list-create", kwargs={'pk': new_review.id})
+        link = reverse("comments:shelter-comment-list-create", kwargs={'pk': self.kwargs['pk']}) # Takes you to list of shelter's reviews
         Notification(user=CustomUser.objects.get(id=self.kwargs['pk']), message=message, link=link).save()
         
     def get_queryset(self):
@@ -39,18 +39,18 @@ class ApplicationCommentListCreateAPIView(ListCreateAPIView):
     def perform_create(self, serializer):
         application = Application.objects.get(id=self.kwargs['pk'])
         if self.request.user == application.applicant or self.request.user == application.pet.shelter:
-            new_message = serializer.save(commenter=self.request.user,
+            serializer.save(commenter=self.request.user,
                             application=application)
             
             if self.request.user == application.applicant:
                 # Create notification for seeker for new message
                 message = f"You received a message from {application.shelter} about {application.pet.name}."
-                link = reverse("comments:application-comment-list-create", kwargs={'pk': new_message.id})
+                link = reverse("comments:application-comment-list-create", kwargs={'pk': application.id}) # Takes you to list of app's comments/chat
                 Notification(user=self.request.user.name, message=message, link=link).save()
             else:
                 # Create notification for shelter for new message
                 message = f"You received a message from {self.request.user.name} about {application.pet.name}."
-                link = reverse("comments:application-comment-list-create", kwargs={'pk': new_message.id})
+                link = reverse("comments:application-comment-list-create", kwargs={'pk': application.id})
                 Notification(user=application.shelter, message=message, link=link).save()
 
         else:
