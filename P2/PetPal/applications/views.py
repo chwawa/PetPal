@@ -1,5 +1,6 @@
 from .serializers import ApplicationSerializer
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from .models import Application
 from .serializers import ApplicationUpdateSerializer
 from rest_framework.views import APIView
@@ -8,7 +9,7 @@ from rest_framework import status
 from .permissions import IsShelter, IsSeeker
 from rest_framework.pagination import PageNumberPagination
 from pets.models import Pet
-
+from notifications.models import Notification
 
 class ShelterApplicationsListView(APIView):
     permission_classes = [IsShelter]
@@ -53,6 +54,12 @@ class ApplicationUpdateView(APIView):
             serializer = ApplicationUpdateSerializer(application, data=request.data)
             if serializer.is_valid():
                 serializer.save()
+
+                # Create notification for application update
+                message = "An application's status has been updated."
+                link = reverse("applications:application_update")
+                Notification(user=request.user, message=message, link=link)
+
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response({'error': 'Permission denied'}, status=status.HTTP_403_FORBIDDEN)

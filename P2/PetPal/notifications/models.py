@@ -1,34 +1,11 @@
 from django.db import models
-# from accounts.models import Seeker, Shelter
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
+from accounts.models import CustomUser
 
 
 # Create your models here.
 class Notification(models.Model):
-    creation_time = models.DateTimeField()
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    creation_time = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
     message = models.TextField()
- 
     link = models.URLField(blank=True, null=True)
-
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey()
-
-# notifications = models.ManyToManyField(Notification)
-
-# class SeekerNotification(models.Model):
-#     creation_time = models.DateTimeField()
-#     is_read = models.BooleanField(default=False)
-#     seeker = models.ForeignKey(User, on_delete=models.CASCADE)
-#     message = models.TextField()
-#     link = models.URLField(blank=True, null=True)
-
-# class ShelterNotification(models.Model):
-#     creation_time = models.DateTimeField()
-#     is_read = models.BooleanField(default=False)
-#     shelter = models.ForeignKey(User, on_delete=models.CASCADE)
-#     message = models.TextField()
-#     link = models.URLField(blank=True, null=True)

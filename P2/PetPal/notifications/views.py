@@ -18,7 +18,11 @@ class ListCreateNotification(ListCreateAPIView):
     pagination_class = SetPaginationNotification
 
     def get_queryset(self):
-        queryset = Notification.objects.all()
+        queryset = Notification.objects.all().filter(user=self.request.user)
+
+        if queryset == []:
+            return []
+
         filter = self.request.query_params.get('filter')
         order = self.request.query_params.get('order')
         if filter is not None:
@@ -36,6 +40,8 @@ class ListCreateNotification(ListCreateAPIView):
 
         return queryset
     
+    # REMOVE CREATE 
+    
     # t = type/app of notification
     # reverse(t:...)
 
@@ -48,4 +54,16 @@ class RetrieveDestroyNotification(RetrieveDestroyAPIView):
             notif.is_read = True
 
         return notif
+    
 
+# class UserCreateView(CreateAPIView):
+#     # serializer_class = UserSerializer
+#     # permission_classes = [AllowAny]
+#     def perform_create(self, serializer):
+#         # validated_data = serializer.validated_data
+#         # CustomUser.objects.create_user(**validated_data)
+#         user = ...
+#         message = "notif msg"
+#         link = reverse("accounts:...", args=[])
+#         Notification.objects.create(user=user, message=message, link=link).save()
+        
