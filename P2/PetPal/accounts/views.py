@@ -77,7 +77,7 @@ class DeleteView(generics.DestroyAPIView):
             if instance.user_type == 'shelter':
                 instance.pets.all().delete()
             else:
-                instance.applications.all().delete()
+                instance.applications_applicant.all().delete()
             instance.notifications.all().delete()
             instance.delete()
         else:

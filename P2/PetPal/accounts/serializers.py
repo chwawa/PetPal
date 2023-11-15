@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
     repeat_password = serializers.CharField(write_only=True, required=True)
     class Meta:
         model = CustomUser
-        fields = ['user_type', 'username', 'password', 'repeat_password', 'name', 'profile_pic', 'email', 'phone', 'location', 'about']
+        fields = ['user_type', 'username', 'password', 'repeat_password', 'name', 'profile_pic', 'email', 'phone', 'location', 'about', 'new_pet_listing_pref']
     def validate(self, data):
         pwd1 = data.get('password')
         pwd2 = data.get('repeat_password')
