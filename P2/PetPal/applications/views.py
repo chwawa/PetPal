@@ -4,33 +4,35 @@ from django.urls import reverse
 from .models import Application
 from .serializers import ApplicationUpdateSerializer
 from rest_framework.views import APIView
+from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from .permissions import IsShelter, IsSeeker
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated,SAFE_METHODS
 from pets.models import Pet
 from notifications.models import Notification
+from accounts.models import CustomUser
+from django_filters.rest_framework import DjangoFilterBackend
 
-class ShelterApplicationsListView(APIView):
-    permission_classes = [IsShelter]
-    def get(self, request):
-        status_filter = request.query_params.get('status', None)
-        sort_by = request.query_params.get('sort_by', None)
-        pagination = PageNumberPagination()
-        applications = Application.objects.filter(pet_shelter=request.user.shelter)
-        result_page = pagination.paginate_queryset(applications, request)
-        if status_filter:
-            result_page = result_page.filter(status=status_filter)
-        if sort_by:
-            if sort_by == 'creation time':
-                result_page = sorted(result_page, key=lambda x: x.creation_time)
-            elif sort_by == 'last update time':
-                result_page = sorted(result_page, key=lambda x: x.update_time, reverse=True)
-        serializer = ApplicationSerializer(result_page, many=True)
-        return pagination.get_paginated_response(serializer.data)
+
+# class ApplicationCreateView(CreateAPIView):
+#     queryset = Application.objects.all()
+#     serializer_class = ApplicationSerializer
+#     permission_classes = [IsAuthenticated, IsSeeker]
+
+#     def perform_create(self, serializer):
+#         pet_id = self.request.data.get("pet")
+#         new_app = serializer.save(applicant=self.request.user, shelter=Pet.objects.get(id=pet_id).shelter)
+
+class ApplicationPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
 
 class ApplicationView(APIView):
-    permission_classes = [IsSeeker]
+    permission_classes = [IsAuthenticated, IsSeeker]
 
     def post(self, request, pet_id):
         pet = Pet.objects.get(pk=pet_id)
@@ -48,15 +50,28 @@ class ApplicationView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class ApplicationDetailView(APIView):
+    permission_classes = [IsAuthenticated, IsShelter | IsSeeker]
+
+    def get(self, request, application_id):
+        application = get_object_or_404(Application, pk=application_id)
+        serializer = ApplicationSerializer(application)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
 class ApplicationUpdateView(APIView):
-    permission_classes = [IsShelter | IsSeeker]
+    permission_classes = [IsAuthenticated, IsShelter | IsSeeker]
 
     def get_object(self, application_id):
         return get_object_or_404(Application, pk=application_id)
 
     def put(self, request, application_id):
         application = self.get_object(application_id)
-        if (request.user.user_type == 'shelter' and application.PENDING) or (request.user.user_type == 'seeker' and application.PENDING or application.ACCEPTED):
+
+        new_status = request.data.get('status')
+
+        if (CustomUser.objects.get(id=request.user.id).user_type == 'shelter' and application.status == 'PENDING' and (new_status == 'ACCEPTED' or new_status == 'DENIED')) or (CustomUser.objects.get(id=request.user.id).user_type == 'seeker' and (application.status == 'PENDING' or application.status == 'ACCEPTED') and new_status == 'WITHDRAWN'):
             serializer = ApplicationUpdateSerializer(application, data=request.data)
             if serializer.is_valid():
                 app = serializer.save()
@@ -72,10 +87,19 @@ class ApplicationUpdateView(APIView):
         return Response({'error': 'Permission denied'}, status=status.HTTP_403_FORBIDDEN)
 
 
-class ApplicationDetailView(APIView):
-    permission_classes = [IsShelter | IsSeeker]
+class ShelterApplicationsListView(ListAPIView):
+    permission_classes = [IsShelter]
+    serializer_class = ApplicationSerializer
+    pagination_class = ApplicationPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['status']
 
-    def get(self, request, application_id):
-        application = get_object_or_404(Application, pk=application_id, applicant=request.user)
-        serializer = ApplicationSerializer(application)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    def get_queryset(self):
+        user = CustomUser.objects.get(id=self.request.user.id)
+        applications = Application.objects.filter(shelter=user)
+
+        ordering = self.request.query_params.get('sort', 'creation_time')
+        if ordering:
+            applications = applications.order_by(ordering)
+
+        return applications

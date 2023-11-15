@@ -1,4 +1,3 @@
-# models.py
 from django.db import models
 from accounts.models import CustomUser
 
@@ -20,10 +19,12 @@ class Pet(models.Model):
         ("s", "Small (5-10kg)"), ("m", "Medium (10-15kg)"), ("l", "Large (15-30kg)"),
     ] 
     name = models.CharField(max_length=255)
+    picture = models.ImageField(upload_to='./P2/PetPal/pets/pictures/', null=True, blank=True)
     biography = models.TextField(blank=True)
     species = models.CharField(max_length=1, choices=SPECIES_CHOICES, default='d')
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='a')
     creation_time = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
     breed = models.CharField(max_length=255)
     colour = models.CharField(max_length=2, choices=COLOUR_CHOICES, default='w')
     age = models.PositiveIntegerField()
@@ -31,3 +32,4 @@ class Pet(models.Model):
     size = models.CharField(max_length=1, choices=SIZE_CHOICES, default='s')
     location = models.CharField(max_length=255)
     shelter = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="pets")
+
