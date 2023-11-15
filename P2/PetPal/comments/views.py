@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -30,14 +29,14 @@ class ApplicationCommentListCreateAPIView(ListCreateAPIView):
     pagination_class = SetPaginationComments
 
     def perform_create(self, serializer):
-        application = Application.objects.get(self.kwargs['pk'])
+        application = Application.objects.get(id=self.kwargs['pk'])
         if self.request.user == application.applicant or self.request.user == application.pet.shelter:
             serializer.save(commenter=self.request.user,
                             application=application)
         else:
             raise PermissionDenied("You do not have permission to perform this action.")
     def get_queryset(self):
-        application = Application.objects.get(self.kwargs['pk'])
+        application = Application.objects.get(id=self.kwargs['pk'])
         if self.request.user == application.applicant or self.request.user == application.pet.shelter:
             return ApplicationComment.objects.filter(application=application).order_by('-creation_time')
         else:

@@ -24,6 +24,9 @@ class UserSerializer(serializers.ModelSerializer):
     def validate(self, data):
         pwd1 = data.get('password')
         pwd2 = data.get('repeat_password')
+        if pwd1 and len(pwd1) < 8:
+            raise serializers.ValidationError('Password must have at least 8 characters')
+        
         if pwd1 and pwd2 and pwd1 != pwd2:
             raise serializers.ValidationError('Passwords must match')
         
@@ -61,7 +64,8 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             data['name'] = self.instance.name
         if email == None:
             data['email'] = self.instance.email
-        
+        if pwd1 and len(pwd1) < 8:
+            raise serializers.ValidationError('Password must have at least 8 characters')
         if pwd1 and pwd2 and pwd1 != pwd2:
             raise serializers.ValidationError('Passwords must match')
 
