@@ -6,9 +6,9 @@ from .serializers import LoginSerializer, UserSerializer, UserDetailSerializer, 
 from django.contrib.auth import login
 from .models import CustomUser
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import PermissionDenied
+from applications.models import Application
 
 class LoginView(APIView):
     serializer_class = LoginSerializer
@@ -49,7 +49,15 @@ class UserDetailView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
     def get_object(self):
         # need to add more conditions here once application is done
-        return get_object_or_404(CustomUser, id=self.kwargs['pk'])
+        profile = get_object_or_404(CustomUser, id=self.kwargs['pk'])
+        if profile.user_type == 'shelter':
+            return profile
+        else:
+            application = Application.objects.get(applicant=profile)
+            if (application.pet.shelter == self.request.user and application.PENDING == True) or (profile == self.request.user):
+                return profile
+            else:
+                raise PermissionDenied("You do not have permission to perform this action.")
         
 class ListView(generics.ListAPIView):
     serializer_class = UserDetailSerializer
@@ -59,13 +67,13 @@ class ListView(generics.ListAPIView):
             raise PermissionDenied("Access is not allowed.")
         return CustomUser.objects.filter(user_type='shelter')
 
-#need pet_listings, applications and notifications to test
 class DeleteView(generics.DestroyAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
     def perform_destroy(self, instance):
         if instance.user_type == 'shelter':
-            instance.pet_listings.all().delete()
+            instance.Pet_set.all().delete()
         else:
-            instance.applications.all().delete()
-        instance.notifications.all().delete()
+            instance.Application_set.all().delete()
+        instance.Notification_set.all().delete()
+        instance.delete()

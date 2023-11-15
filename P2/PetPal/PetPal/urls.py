@@ -28,7 +28,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     # path('applications/', include('applications.urls', namespace='applications')),
-    # path('comments/', include('comments.urls', namespace='comments')),
+    path('comments/', include('comments.urls', namespace='comments')),
     # path('notifications/', include('notifications.urls', namespace='notifications')),
     # path('pets/', include('pets.urls', namespace='pets')),
 ]
