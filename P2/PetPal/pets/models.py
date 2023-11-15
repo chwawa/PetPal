@@ -4,32 +4,32 @@ from accounts.models import CustomUser
 
 class Pet(models.Model):
     SPECIES_CHOICES = [
-        ("d", "Dog"), ("c", "Cat"), ("o", "Other"),
+        ("dog", "Dog"), ("cat", "Cat"), ("other", "Other"),
     ]
     STATUS_CHOICES = [
-        ("a", "Available"), ("u", "Unavailable"),
+        ("available", "Available"), ("unavailable", "Unavailable"),
     ]
     COLOUR_CHOICES = [
-        ("w", "White"), ("br", "Brown"), ("be", "Beige"), ("g", "Grey"), ("bl", "Black"), ("o", "Other"),
+        ("white", "White"), ("brown", "Brown"), ("beige", "Beige"), ("grey", "Grey"), ("black", "Black"), ("other", "Other"),
     ]
     GENDER_CHOICES = [
-        ("m", "Male"), ("f", "Female"),
+        ("male", "Male"), ("female", "Female"),
     ]
     SIZE_CHOICES = [
-        ("s", "Small (5-10kg)"), ("m", "Medium (10-15kg)"), ("l", "Large (15-30kg)"),
+        ("small", "Small (5-10kg)"), ("medium", "Medium (10-15kg)"), ("large", "Large (15-30kg)"),
     ] 
     name = models.CharField(max_length=255)
     picture = models.ImageField(upload_to='./P2/PetPal/pets/pictures/', null=True, blank=True)
     biography = models.TextField(blank=True)
-    species = models.CharField(max_length=1, choices=SPECIES_CHOICES, default='d')
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='a')
+    species = models.CharField(max_length=1, choices=SPECIES_CHOICES, default='dog')
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='available')
     creation_time = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
     breed = models.CharField(max_length=255)
-    colour = models.CharField(max_length=2, choices=COLOUR_CHOICES, default='w')
+    colour = models.CharField(max_length=2, choices=COLOUR_CHOICES, default='white')
     age = models.PositiveIntegerField()
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='m')
-    size = models.CharField(max_length=1, choices=SIZE_CHOICES, default='s')
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='male')
+    size = models.CharField(max_length=1, choices=SIZE_CHOICES, default='small')
     location = models.CharField(max_length=255)
     shelter = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="pets")
 
