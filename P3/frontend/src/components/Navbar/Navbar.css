@@ -26,6 +26,28 @@ header > a {
     font-size: x-large;
     font-weight: 500;
 }
+.logo_image {
+    margin-left: 5px;
+}
+
+.notif_button {
+    display: inline-block;
+    position: relative;
+    margin-top: 0.3rem;
+}
+
+.notif_button .badge {
+    position: absolute;
+    top: -10px;
+    right: -20px;
+    border-radius: 100%;
+    background: red;
+    color: white;
+}
+
+.notif_button:hover {
+    filter: invert(10%) sepia(23%) saturate(405%) hue-rotate(317deg) brightness(103%) contrast(105%);
+}
 
 .float-right {
     float: right;

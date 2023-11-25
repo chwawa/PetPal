@@ -1,12 +1,10 @@
 import React from "react";
-import "./Navbar.css"
-import 'bootstrap/dist/css/bootstrap.css';
+
 import logo from "../../assets/logo.svg"
 import bell from "../../assets/notif_bell.svg"
-
-// import Dropdown from 'react-bootstrap/Dropdown';
-
 import Dropdown from 'react-bootstrap/Dropdown';
+
+import "./Navbar.css"
 
 function Navbar() {
     return (
@@ -14,7 +12,7 @@ function Navbar() {
         <header>
           <a href="/" className="logo">
             PetPal
-            <img src={logo} />
+            <img src={logo} className="logo_image"/>
           </a>
           <a href="/">
             Home
@@ -36,7 +34,7 @@ function Navbar() {
             </Dropdown.Menu>
           </Dropdown>
 
-          <a href="/" className="float-right">
+          <a href="/" className="notif_button float-right">
             <img src={bell} />
           </a>
 

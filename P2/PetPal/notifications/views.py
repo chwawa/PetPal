@@ -52,6 +52,7 @@ class RetrieveDestroyNotification(RetrieveDestroyAPIView):
         notif = get_object_or_404(Notification, id=self.kwargs['pk'])
         if notif:
             notif.is_read = True
+            notif.save()
 
         return notif
     
