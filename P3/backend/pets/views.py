@@ -52,7 +52,7 @@ class PetListView(ListAPIView):
 
     #filter
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['shelter', 'status', 'colour', 'size']
+    filterset_fields = ['shelter', 'status', 'colour', 'size', 'breed', 'species']
 
     #sorts by any param
     def get_queryset(self):
