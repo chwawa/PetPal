@@ -52,3 +52,7 @@ header > a {
 .float-right {
     float: right;
 }
+
+.myprofile-dropdown:hover {
+    background-color: #fded9f !important;
+}

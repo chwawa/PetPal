@@ -4,6 +4,8 @@ import logo from "../../assets/logo.svg"
 import bell from "../../assets/notif_bell.svg"
 import Dropdown from 'react-bootstrap/Dropdown';
 
+import { Outlet } from "react-router-dom";
+
 import "./Navbar.css"
 
 function Navbar() {
@@ -22,7 +24,7 @@ function Navbar() {
           </a>
           
           <Dropdown className="float-right">
-            <Dropdown.Toggle variant="light">
+            <Dropdown.Toggle variant="light" className="myprofile-dropdown">
                 My Profile
             </Dropdown.Toggle>
             
@@ -39,7 +41,7 @@ function Navbar() {
           </a>
 
         </header>
-
+        <Outlet />
         
       </>
     );
