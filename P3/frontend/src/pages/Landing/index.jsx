@@ -7,7 +7,6 @@ import { faCat, faDog, faPaw } from '@fortawesome/free-solid-svg-icons';
 
 import "./Landing.css";
 
-
 export default function Landing() {
     let navigate = useNavigate();
 
@@ -38,6 +37,7 @@ export default function Landing() {
                     </Button>
                 </div>
             </div>
+            
         </main>
     )
 }

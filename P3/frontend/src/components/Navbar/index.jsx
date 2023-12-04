@@ -4,8 +4,6 @@ import logo from "../../assets/logo.svg"
 import bell from "../../assets/notif_bell.svg"
 import Dropdown from 'react-bootstrap/Dropdown';
 
-import { Outlet } from "react-router-dom";
-
 import "./Navbar.css"
 
 function Navbar() {
@@ -19,7 +17,8 @@ function Navbar() {
           <a href="/">
             Home
           </a>
-          <a href="">
+          {/* Change to My Applications is seeker; My Pets if shelter */}
+          <a href="/mypets">
             My Pets
           </a>
           
@@ -41,8 +40,6 @@ function Navbar() {
           </a>
 
         </header>
-        <Outlet />
-        
       </>
     );
   }
