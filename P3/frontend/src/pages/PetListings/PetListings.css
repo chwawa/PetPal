@@ -34,8 +34,16 @@
     display: grid;
     grid-template-columns: auto auto auto;
     grid-gap: 15px;
+    padding: 10px;
 }
 
 .float-right {
     float: right;
+}
+
+.nav-button {
+    background-color: #f6bbc4 !important;
+    color: #ffffff !important;
+    margin-top: 10px;
+    margin-right: 15px; 
 }
