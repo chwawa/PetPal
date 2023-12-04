@@ -8,7 +8,6 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
 import PetCard from "../../components/PetCard";
-import Filters from "../../components/Filters";
 
 import "./PetListings.css"
 
@@ -184,7 +183,13 @@ export default function PetListings() {
 
             <div className="listings">
                 { pets.map(pet => (
-                    <PetCard cardImage={pet.picture} cardTitle={pet.name} cardText={pet.biography} />
+                    <PetCard 
+                        petID={pet.id}
+                        link={`/pets/${species}/${pet.id}`}
+                        cardImage={pet.picture} 
+                        cardTitle={pet.name}
+                        cardSubtitle={pet.breed + ' • ' + pet.age + ' y/o'} 
+                        cardText={pet.biography} />
                     // add ID?
                 ))}
             </div>

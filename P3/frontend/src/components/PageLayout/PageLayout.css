@@ -1,0 +1,5 @@
+.layout {
+    display: block;
+    position: relative;
+    min-height: 100vh;
+  }
