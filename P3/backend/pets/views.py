@@ -13,7 +13,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 
 class PetPagination(PageNumberPagination):
-    page_size = 10
+    page_size = 9
     page_size_query_param = 'page_size'
     max_page_size = 100
 
@@ -52,7 +52,7 @@ class PetListView(ListAPIView):
 
     #filter
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['shelter', 'status', 'colour', 'size', 'breed', 'species']
+    filterset_fields = {'shelter':['exact'], 'status':['exact'], 'colour':['exact'], 'size':['exact'], 'breed':['exact'], 'species':['exact'], 'gender':['exact'], 'age':['gte', 'lte', 'range', 'exact'], 'location':['exact']}
 
     #sorts by any param
     def get_queryset(self):

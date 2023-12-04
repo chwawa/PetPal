@@ -1,0 +1,10 @@
+.container {
+    margin: auto;
+    text-align: center;
+}
+
+.home-button {
+    margin-top: 20px;
+    background-color: #f6bbc4 !important;
+    color: white !important;
+}
