@@ -7,6 +7,8 @@ import PetListings from './pages/PetListings/PetListings';
 import MyPets from './pages/MyPets';
 import MyApplications from './pages/MyApplications';
 import PetDetail from './pages/PetDetail';
+import CreatePet from './pages/CreatePet';
+import UpdatePet from './pages/UpdatePet';
 
 function App() {
   return (
@@ -19,7 +21,16 @@ function App() {
 
           {/* change route depending on seeker or shelter */}
           <Route path="mypets/" element={<MyPets />} />
-          {/* <Route path="mypets/" element={<MyApplications />} /> */}
+          {/* <Route path="myapplications/" element={<MyApplications />} /> */}
+
+
+          {/* SHELTER LINKS */}
+          <Route path="mypets/new" element={<CreatePet />} />
+          <Route path="mypets/:id" element={<UpdatePet />} />
+
+
+          {/* SEEKER LINKS */}
+          
           
         </Route>
         <Route path="*" element={<Page404 />} />

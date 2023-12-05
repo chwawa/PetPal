@@ -1,7 +1,7 @@
 // Resulting page from an intial search
 
 import { useState, useEffect, useMemo } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
 import Dropdown from 'react-bootstrap/Dropdown';
 import Modal from 'react-bootstrap/Modal';
@@ -57,9 +57,9 @@ export default function PetListings() {
         .then(res => res.json())
         .then(json => {
             setPets(json.results);
-            setTotalPages(Math.ceil(parseInt(json.count) / 9));
+            setTotalPages(Math.floor((parseInt(json.count) / 9) + 1));
         })
-    }, [query, sort]);
+    }, [query, sort, species]);
 
     const [message, setMessage] = useState("")
 
@@ -149,9 +149,9 @@ export default function PetListings() {
                                 <Form.Label>Age</Form.Label>
                                 <Form.Select aria-label="Select age" value={searchParams.get("age")} 
                                     onChange={(e) => {
-                                        if (e.target.value == 3) {
+                                        if (e.target.value === 3) {
                                             setSearchParams({...query, age__gte: [], age__lte: e.target.value, age__range: [], page: 1})
-                                        } else if (e.target.value == 8) {
+                                        } else if (e.target.value === 8) {
                                             setSearchParams({...query, age__gte: e.target.value, age__lte: [], age__range: [], page: 1})
                                         } else {
                                             setSearchParams({...query, age__gte: [], age__lte: [], age__range: e.target.value, page: 1})
@@ -180,17 +180,21 @@ export default function PetListings() {
                 </Modal>
             </div>
             
+            { pets.length === 0 
+                ? <>
+                    <h2>No one's here!</h2> 
+                </> 
+                : null}
 
             <div className="listings">
                 { pets.map(pet => (
                     <PetCard 
-                        petID={pet.id}
+                        key={pet.id}
                         link={`/pets/${species}/${pet.id}`}
                         cardImage={pet.picture} 
                         cardTitle={pet.name}
                         cardSubtitle={pet.breed + ' • ' + pet.age + ' y/o'} 
                         cardText={pet.biography} />
-                    // add ID?
                 ))}
             </div>
 

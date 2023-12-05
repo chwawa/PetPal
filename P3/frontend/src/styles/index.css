@@ -23,3 +23,24 @@ main {
   position: relative;
 }
 
+.pink-button {
+  background-color: #f6bbc4 !important;
+  color: #ffffff !important;
+}
+
+.pink-button:hover {
+  background-color: #ffffff !important;
+  color: #f6bbc4 !important;
+}
+
+.float-right {
+  float: right;
+}
+
+.back-nav {
+  text-decoration: none;
+  color:#f6bbc4;
+  font-size: large;
+  cursor: pointer;
+}
+
