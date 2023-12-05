@@ -1,13 +1,13 @@
 
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button"
 import PetCard from "../../components/PetCard";
-import MyPetsActionButtons from "../../components/MyPetsActionButtons";
-
 
 import "./MyPets.css"
 
 export default function MyPets() {
+    let navigate = useNavigate();
     const [pets, setPets] = useState([]);
     const url = 'http://127.0.0.1:8000'; // change after deployment
     const shelterID = 1; // change to current shelter
@@ -27,7 +27,14 @@ export default function MyPets() {
             <hr class="solid"></hr>
 
             <div className="button-container">
-                <Button variant="light" className="new-listing-button" size="lg">Create Pet</Button>
+                <Button 
+                    variant="light" 
+                    className="new-listing-button" 
+                    size="lg"
+                    onClick={() => navigate('/mypets/new')}
+                >
+                    Create Pet
+                </Button>
             </div>
 
             <h2>My Pets:</h2>
@@ -36,13 +43,14 @@ export default function MyPets() {
             <div className="listings">
                 { pets.map(pet => (
                     <PetCard 
+                        key={pet.id}
+                        petID={pet.id}
                         cardImage={pet.picture} 
                         cardTitle={pet.name}
                         cardSubtitle={pet.breed + ' • ' + pet.age + ' y/o'} 
                         cardText={pet.biography} 
-                        actionButtons={<MyPetsActionButtons />}
+                        actionButtons={true}
                     />
-                    // add ID?
                 ))}
             </div>
 

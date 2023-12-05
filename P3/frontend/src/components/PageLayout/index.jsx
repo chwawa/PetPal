@@ -5,7 +5,7 @@ import "./PageLayout.css"
 
 export default function PageLayout() {
     return (
-        <div class="layout">
+        <div className="layout">
             <Navbar />
             <Outlet />
             <Footer />
