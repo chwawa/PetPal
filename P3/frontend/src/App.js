@@ -10,6 +10,8 @@ import PetDetail from './pages/PetDetail';
 import CreatePet from './pages/CreatePet';
 import UpdatePet from './pages/UpdatePet';
 
+import ShelterBlog from './pages/ShelterBlog/ShelterBlog';
+
 function App() {
   return (
     <BrowserRouter>
@@ -27,6 +29,9 @@ function App() {
           {/* SHELTER LINKS */}
           <Route path="mypets/new" element={<CreatePet />} />
           <Route path="mypets/:id" element={<UpdatePet />} />
+
+
+          <Route path="blog/:id" element={<ShelterBlog />} />
 
 
           {/* SEEKER LINKS */}
