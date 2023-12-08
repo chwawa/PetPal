@@ -3,23 +3,20 @@ header {
     padding: 25px;  
 }
   
-header a {
+.link {
     color: #ffffff;
     font-size: 1rem;
     margin-right: 2rem;
+    text-decoration: none;
 }
 
-header a.active {
+.active {
     font-weight: bold;
     color: #fded9f;
 }
 
-header a:hover {
+.link:hover {
     color: #fff2b3;
-}
-
-header > a {
-    text-decoration: none;
 }
 
 .logo {
@@ -51,6 +48,11 @@ header > a {
 
 .float-right {
     float: right;
+}
+
+.myprofile-link {
+    text-decoration: none;
+    color: black;
 }
 
 .myprofile-dropdown:hover {

@@ -9,7 +9,7 @@ export default function Page404() {
 
     return (
         <div className="container">
-            <img className="container" src={ErrorCat} alt="404" />
+            <img src={ErrorCat} alt="404" width="50%"/>
                 <h1>You look lost.</h1>
                 <Button className="home-button" variant="light" onClick={() => navigate("/")}>Take Me Home</Button>
         </div>
