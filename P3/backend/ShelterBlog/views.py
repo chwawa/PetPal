@@ -12,7 +12,6 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDe
 from notifications.models import Notification
 from django.urls import reverse
 from accounts.models import CustomUser
-from shelter.models import Shelter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
 
@@ -27,7 +26,7 @@ class ShelterBlogCreateView(APIView):
     permission_classes = [IsAuthenticated, IsShelter]
 
     def post(self, request, shelter_id):
-        shelter = Shelter.objects.get(pk=shelter_id)
+        shelter = CustomUser.objects.get(pk=shelter_id)
         serializer = ShelterBlogSerializer(data=request.data)
         if serializer.is_valid():
             new_shelter_blog = serializer.save(shelter=shelter)
