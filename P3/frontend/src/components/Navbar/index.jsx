@@ -42,13 +42,13 @@ function Navbar() {
             </Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item>
-                <Link to=`/profile/${id}` className="myprofile-link" >
+                <Link to={`/profile/${id}`} className="myprofile-link">
                   View Profile
                 </Link>
               </Dropdown.Item>
 
               <Dropdown.Item>
-                <Link to=`/profile/update/${id}` className="myprofile-link" >
+                <Link to={`/profile/update/${id}`} className="myprofile-link" >
                   Edit Profile
                 </Link>
               </Dropdown.Item>
