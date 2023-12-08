@@ -3,13 +3,16 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/logo.svg"
 import bell from "../../assets/notif_bell.svg"
 import Dropdown from 'react-bootstrap/Dropdown';
-
 import "./Navbar.css"
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+
     const location = useLocation();
     const currURL = location.pathname;
     const user = "Shelter" // change to get user type from context or local storage or something
+    const id = localStorage.getItem("id");
+    const Navigate = useNavigate();
 
     return (
       <>
@@ -37,16 +40,15 @@ function Navbar() {
             <Dropdown.Toggle variant="light" className="myprofile-dropdown">
               My Profile
             </Dropdown.Toggle>
-            
             <Dropdown.Menu>
               <Dropdown.Item>
-                <Link to="/myprofile" className="myprofile-link" >
+                <Link to=`/profile/${id}` className="myprofile-link" >
                   View Profile
                 </Link>
               </Dropdown.Item>
 
               <Dropdown.Item>
-                <Link to="" className="myprofile-link" >
+                <Link to=`/profile/update/${id}` className="myprofile-link" >
                   Edit Profile
                 </Link>
               </Dropdown.Item>

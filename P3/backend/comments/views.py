@@ -1,8 +1,8 @@
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.permissions import IsAuthenticated
-from .models import ShelterReviewComment, ApplicationComment
-from .serializers import ShelterCommentSerializer, ApplicationCommentSerializer
+from .models import ShelterReviewComment, ApplicationComment, ShelterBlogComment
+from .serializers import ShelterCommentSerializer, ApplicationCommentSerializer, ShelterBlogCommentSerializer
 from accounts.models import CustomUser
 from rest_framework.exceptions import PermissionDenied
 from applications.models import Application
@@ -30,6 +30,18 @@ class ShelterCommentListCreateAPIView(ListCreateAPIView):
         
     def get_queryset(self):
         return ShelterReviewComment.objects.filter(shelter=self.kwargs['pk']).order_by('-creation_time')
+    
+class ShelterBlogCommentListCreateAPIView(ListCreateAPIView):
+    serializer_class = ShelterBlogCommentSerializer
+    permission_classes = [IsAuthenticated]
+    pagination_class = SetPaginationComments
+
+    def perform_create(self, serializer):
+        serializer.save(commenter=self.request.user, 
+                        shelter=CustomUser.objects.get(id=self.kwargs['pk'], user_type='shelter'))
+        
+    def get_queryset(self):
+        return ShelterBlogComment.objects.filter(shelter=self.kwargs['pk']).order_by('-creation_time')
 
 class ApplicationCommentListCreateAPIView(ListCreateAPIView):
     serializer_class = ApplicationCommentSerializer

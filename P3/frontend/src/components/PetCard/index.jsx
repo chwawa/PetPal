@@ -47,7 +47,6 @@ function PetCard( { petID, link, cardImage, cardTitle, cardSubtitle, cardText, a
         </Card.Body>
       </Card>
     </>
-    
   );
 }
 
