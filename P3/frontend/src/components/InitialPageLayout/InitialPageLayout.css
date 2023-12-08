@@ -1,0 +1,37 @@
+.layout {
+    display: block;
+    position: relative;
+    min-height: 100vh;
+  }
+
+header {
+    background-color: #f6bbc4;
+    padding: 25px;  
+}
+  
+header a {
+    color: #ffffff;
+    font-size: 1rem;
+    margin-right: 2rem;
+}
+
+header a.active {
+    font-weight: bold;
+    color: #fded9f;
+}
+
+header a:hover {
+    color: #fff2b3;
+}
+
+header > a {
+    text-decoration: none;
+}
+
+.logo {
+    font-size: x-large;
+    font-weight: 500;
+}
+.logo_image {
+    margin-left: 5px;
+}

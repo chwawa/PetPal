@@ -1,0 +1,45 @@
+.shelter-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    width: 450px; /* Adjust the width as needed */
+    margin: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .card-img-container {
+    max-width: 120px; /* Adjust the width of the image container */
+    margin-right: 20px;
+  }
+  
+  .card-img-top {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  .email, .phone, .location {
+    margin-bottom: 5px;
+    text-align: left;
+  }
+  
+  .learn-more-button {
+    width: 100px;
+  }
+  @media screen and (max-width: 500px) {
+    .shelter-card {
+      width: 390px;
+    }
+  }

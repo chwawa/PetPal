@@ -9,6 +9,12 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import PermissionDenied
 from applications.models import Application
+from rest_framework.pagination import PageNumberPagination
+
+class ShelterListingPagination(PageNumberPagination):
+    page_size = 4
+    page_size_query_param = 'page_size'
+    max_page_size = 100
 
 class LoginView(APIView):
     serializer_class = LoginSerializer
@@ -23,7 +29,8 @@ class LoginView(APIView):
             refresh_token = str(refresh)
             return Response({
                 'access_token': access_token,
-                'refresh_token': refresh_token
+                'refresh_token': refresh_token,
+                'id': user.id
             })
         else: 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -58,11 +65,12 @@ class UserDetailView(generics.RetrieveAPIView):
                 application = get_object_or_404(Application, applicant=profile)
                 if application.pet.shelter == self.request.user and application.PENDING == True and application.ACCEPTED == False and application.DENIED == False and application.WITHDRAWN == False:
                     return profile
-            raise PermissionDenied("You do not have permission to perform this action.")
+            raise PermissionDenied("You do not have permission to perform this action.", code=403)
         
 class ListView(generics.ListAPIView):
     serializer_class = UserDetailSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = ShelterListingPagination
     def get_queryset(self):
         if self.kwargs['type'] != 'shelters':
             raise PermissionDenied("Access is not allowed.")

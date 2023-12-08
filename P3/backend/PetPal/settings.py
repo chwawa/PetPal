@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'comments',
     'notifications',
     'pets',
+    'ShelterBlog',
 ]
 
 MIDDLEWARE = [
