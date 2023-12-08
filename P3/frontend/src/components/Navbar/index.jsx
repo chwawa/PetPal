@@ -10,7 +10,7 @@ function Navbar() {
 
     const location = useLocation();
     const currURL = location.pathname;
-    const user = "Shelter" // change to get user type from context or local storage or something
+    const user = localStorage.getItem("usertype");
     const id = localStorage.getItem("id");
     const Navigate = useNavigate();
 
@@ -27,11 +27,11 @@ function Navbar() {
           </Link>
 
           {/* Change to My Applications is seeker; My Pets if shelter */}
-          {user == "Shelter"
+          {user == "shelter"
             ? <Link to="/mypets" className={currURL.startsWith("/mypets") ? "active link" : "link"}>
                 My Pets
               </Link>
-            : <Link to="/myapplications" className={currURL.startsWith("/myapplications") ? "active link" : "link"}>
+            : <Link to="/applications" className={currURL.startsWith("/applications") ? "active link" : "link"}>
                 My Applications
               </Link>
           }
@@ -48,7 +48,7 @@ function Navbar() {
               </Dropdown.Item>
 
               <Dropdown.Item>
-                <Link to={`/profile/update/${id}`} className="myprofile-link" >
+                <Link to={`/profile/update/${id}`} className="myprofile-link">
                   Edit Profile
                 </Link>
               </Dropdown.Item>

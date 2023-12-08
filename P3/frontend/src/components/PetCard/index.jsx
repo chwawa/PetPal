@@ -32,7 +32,7 @@ function PetCard( { petID, link, cardImage, cardTitle, cardSubtitle, cardText, a
       />
 
       <Card style={{ cursor: "pointer"}} onClick={() => handleCardClick()}>
-        <Card.Img className="card-img-top" variant="top" src={cardImage} />
+        <Card.Img className="card-img-top" src={cardImage} />
         <Card.Body>
           <Card.Title>{cardTitle}</Card.Title>
           <Card.Subtitle>{cardSubtitle}</Card.Subtitle>

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import Card from "react-bootstrap/Card";
 import Heart from "react-animated-heart";
@@ -10,10 +11,17 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 
 import "./ArticleCard.css"
 
+
 export default function ArticleCard({cardTitle, cardBody, fetchedLikes, fetchedClicked}) {
+    const currUserId = localStorage.getItem('id');
+    const accessToken = localStorage.getItem('access_token');
+    const { id } = useParams()
+    const url = "http://127.0.0.1:8000"
+
     const [likes, setLikes] = useState(fetchedLikes); // set to num of likes from fetch
     const [isClicked, setIsClicked] = useState(fetchedClicked); //set to true or false from fetch
     const [showComments, setShowComments] = useState(false);
+    const [comments, setComments] = useState([])
 
     const handleLike = () => {
         if (isClicked) {
@@ -24,11 +32,29 @@ export default function ArticleCard({cardTitle, cardBody, fetchedLikes, fetchedC
         setIsClicked(!isClicked);
     };
 
-    const comments = () => {
+    useEffect(() => {
+        fetch(`${url}/comments/shelter/${id}/blog`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(json => {
+               
+                setComments(json.results)
+                console.log(comments)
+                
+            })
+    }, []);
+
+    const allComments = () => {
         return (
             <Card.Footer>
-                {/* loop */}
-                fetched comments here
+                {comments.map(comment => (
+                    comment
+                ))}
 
                 <div className="comment-textbox">
                     <Form.Control type="text" />
@@ -53,7 +79,7 @@ export default function ArticleCard({cardTitle, cardBody, fetchedLikes, fetchedC
                 <Heart isClick={isClicked} onClick={() => handleLike()} />
             </div>
 
-            { showComments ? comments() : null }
+            { showComments ? allComments() : null }
 
         </Card>
     )
