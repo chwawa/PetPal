@@ -3,10 +3,12 @@ import React from "react";
 import logo from "../../assets/logo.svg"
 import bell from "../../assets/notif_bell.svg"
 import Dropdown from 'react-bootstrap/Dropdown';
-
 import "./Navbar.css"
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+    const id = localStorage.getItem("id");
+    const Navigate = useNavigate();
     return (
       <>
         <header>
@@ -26,12 +28,11 @@ function Navbar() {
             <Dropdown.Toggle variant="light" className="myprofile-dropdown">
                 My Profile
             </Dropdown.Toggle>
-            
             <Dropdown.Menu>
-                <Dropdown.Item>View Profile</Dropdown.Item>
-                <Dropdown.Item>Edit Profile</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item>Log Out</Dropdown.Item>
+              <Dropdown.Item onClick={() => Navigate(`/profile/${id}`)}>View Profile</Dropdown.Item>
+              <Dropdown.Item onClick={() => Navigate(`/profile/update/${id}`)}>Edit Profile</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item>Log Out</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
 
