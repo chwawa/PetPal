@@ -7,11 +7,16 @@ import PetListings from './pages/PetListings/PetListings';
 import MyPets from './pages/MyPets';
 import MyApplications from './pages/MyApplications';
 import PetDetail from './pages/PetDetail';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import ShelterListings from './pages/ShelterListings';
+import InitialPageLayout from './components/InitialPageLayout';
+import ProfileUpdate from './pages/ProfileUpdate';
+import ProfileView from './pages/ProfileView';
 import CreatePet from './pages/CreatePet';
 import UpdatePet from './pages/UpdatePet';
 
 import ShelterBlog from './pages/ShelterBlog/ShelterBlog';
-
 function App() {
   return (
     <BrowserRouter>
@@ -37,6 +42,13 @@ function App() {
           {/* SEEKER LINKS */}
           
           
+          <Route path="shelters/" element={<ShelterListings />} />
+          <Route path="profile/:id" element={<ProfileView />} />
+          <Route path="profile/update/:id" element={<ProfileUpdate />} />
+        </Route>
+        <Route path="" element={<InitialPageLayout />} >
+          <Route path="login/" element={<Login />} />
+          <Route path="signup/" element={<Signup />} />
         </Route>
         <Route path="*" element={<Page404 />} />
       </Routes>

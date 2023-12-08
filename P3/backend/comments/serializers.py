@@ -3,7 +3,7 @@ from .models import ShelterReviewComment, ApplicationComment
 class ShelterCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShelterReviewComment
-        fields = ['text']
+        fields = ['text', 'commenter', 'id']
 
 class ApplicationCommentSerializer(serializers.ModelSerializer):
     class Meta:
