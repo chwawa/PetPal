@@ -1,5 +1,5 @@
 
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import Card from 'react-bootstrap/Card';
@@ -9,6 +9,7 @@ import Badge from 'react-bootstrap/Badge';
 import "./PetDetail.css"
 
 export default function PetDetail() {
+    let navigate = useNavigate();
     const { id } = useParams();
     const [pet, setPet] = useState("");
     const url = 'http://127.0.0.1:8000' // change after deployment
@@ -18,28 +19,28 @@ export default function PetDetail() {
         .then(res => res.json())
         .then(json => {
             setPet(json);
-            console.log(json)
         })
     }, []);
 
     return (
         <main>
+            <p className='back-nav' onClick={() => navigate(-1)}>{'< Back'}</p>
             <div className="pet-detail-grid">
-                <Card style={{ height: '60vh' }}>
+                <Card>
                     <Card.Body>
-                        <Card.Title>Meet {pet.name}!</Card.Title>
+                        <Card.Title><h1>Meet {pet.name}!</h1></Card.Title>
                         <Card.Subtitle style={{ marginBottom: 10 }}>
                             {pet.status == "available" 
                                 ? <Badge bg="success">Active</Badge>
                                 : <Badge bg="secondary">Unactive</Badge>}
                         </Card.Subtitle>
-                        <Card.Img style={{ maxBlockSize: '45vh'}}src={pet.picture} />
+                        <Card.Img src={pet.picture} />
                     </Card.Body>
                 </Card>
 
                 <Card>
                     <Card.Body>
-                        <Card.Title>About</Card.Title>
+                        <Card.Title><h1>About</h1></Card.Title>
                         <Card.Text>{pet.biography}</Card.Text>
                         <div className='info-grid'>
                             <b>Breed</b>

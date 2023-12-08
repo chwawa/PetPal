@@ -13,6 +13,10 @@ import ShelterListings from './pages/ShelterListings';
 import InitialPageLayout from './components/InitialPageLayout';
 import ProfileUpdate from './pages/ProfileUpdate';
 import ProfileView from './pages/ProfileView';
+import CreatePet from './pages/CreatePet';
+import UpdatePet from './pages/UpdatePet';
+
+import ShelterBlog from './pages/ShelterBlog/ShelterBlog';
 function App() {
   return (
     <BrowserRouter>
@@ -24,7 +28,19 @@ function App() {
 
           {/* change route depending on seeker or shelter */}
           <Route path="mypets/" element={<MyPets />} />
-          {/* <Route path="mypets/" element={<MyApplications />} /> */}
+          {/* <Route path="myapplications/" element={<MyApplications />} /> */}
+
+
+          {/* SHELTER LINKS */}
+          <Route path="mypets/new" element={<CreatePet />} />
+          <Route path="mypets/:id" element={<UpdatePet />} />
+
+
+          <Route path="blog/:id" element={<ShelterBlog />} />
+
+
+          {/* SEEKER LINKS */}
+          
           
           <Route path="shelters/" element={<ShelterListings />} />
           <Route path="profile/:id" element={<ProfileView />} />

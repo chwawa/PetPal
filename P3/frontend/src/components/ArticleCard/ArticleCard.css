@@ -1,0 +1,26 @@
+.actions-container {
+    display: grid;
+    grid-template-columns: auto 100px;
+}
+
+.actions-container > p {
+    padding-top: 40px;
+    padding-left: 15px;
+}
+
+.actions-container > p > span {
+    padding-left: 20px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.actions-container > p > span:hover {
+    padding-left: 20px;
+    text-decoration: none;
+}
+
+.comment-textbox {
+    display: grid;
+    grid-template-columns: auto 45px;
+    column-gap: 10px;
+}
