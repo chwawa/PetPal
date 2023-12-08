@@ -1,0 +1,20 @@
+.button-container {
+    text-align: center;
+    margin: auto;
+    margin-bottom: 40px;
+    width: 50%;
+}
+
+.new-listing-button {
+    background-color: #f6bbc4 !important;
+    color: #ffffff !important;
+}
+
+.new-listing-button:hover {
+    background-color: #ffffff !important;
+    color: #f6bbc4 !important;
+}
+
+.my-pets-container {
+    display: grid;
+}
