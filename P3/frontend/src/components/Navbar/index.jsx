@@ -9,6 +9,7 @@ import "./Navbar.css"
 function Navbar() {
     const location = useLocation();
     const currURL = location.pathname;
+    const user = "Shelter" // change to get user type from context or local storage or something
 
     return (
       <>
@@ -23,9 +24,14 @@ function Navbar() {
           </Link>
 
           {/* Change to My Applications is seeker; My Pets if shelter */}
-          <Link to="/mypets" className={currURL.startsWith("/mypets") ? "active link" : "link"}>
-            My Pets
-          </Link>
+          {user == "Shelter"
+            ? <Link to="/mypets" className={currURL.startsWith("/mypets") ? "active link" : "link"}>
+                My Pets
+              </Link>
+            : <Link to="/myapplications" className={currURL.startsWith("/myapplications") ? "active link" : "link"}>
+                My Applications
+              </Link>
+          }
           
           <Dropdown className="float-right">
             <Dropdown.Toggle variant="light" className="myprofile-dropdown">
