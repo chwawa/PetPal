@@ -1,4 +1,4 @@
-import React from "react";
+import { Link, useLocation } from "react-router-dom";
 
 import logo from "../../assets/logo.svg"
 import bell from "../../assets/notif_bell.svg"
@@ -7,37 +7,52 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import "./Navbar.css"
 
 function Navbar() {
+    const location = useLocation();
+    const currURL = location.pathname;
+
     return (
       <>
         <header>
-          <a href="/" className="logo">
+          <Link to="/" className="link logo">
             PetPal
             <img src={logo} className="logo_image"/>
-          </a>
-          <a href="/">
+          </Link>
+
+          <Link to="/" className={(currURL === "/" || currURL.startsWith("/pets")) ? "active link" : "link"}>
             Home
-          </a>
+          </Link>
+
           {/* Change to My Applications is seeker; My Pets if shelter */}
-          <a href="/mypets">
+          <Link to="/mypets" className={currURL.startsWith("/mypets") ? "active link" : "link"}>
             My Pets
-          </a>
+          </Link>
           
           <Dropdown className="float-right">
             <Dropdown.Toggle variant="light" className="myprofile-dropdown">
-                My Profile
+              My Profile
             </Dropdown.Toggle>
             
             <Dropdown.Menu>
-                <Dropdown.Item>View Profile</Dropdown.Item>
-                <Dropdown.Item>Edit Profile</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item>Log Out</Dropdown.Item>
+              <Dropdown.Item>
+                <Link to="/myprofile" className="myprofile-link" >
+                  View Profile
+                </Link>
+              </Dropdown.Item>
+
+              <Dropdown.Item>
+                <Link to="" className="myprofile-link" >
+                  Edit Profile
+                </Link>
+              </Dropdown.Item>
+                
+              <Dropdown.Divider />
+              <Dropdown.Item>Log Out</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
 
-          <a href="/" className="notif_button float-right">
+          <Link to="/notifications" className={currURL === "/notifications" ? "active link notif_button float-right" : "link notif_button float-right"}>
             <img src={bell} />
-          </a>
+          </Link>
 
         </header>
       </>
