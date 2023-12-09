@@ -11,7 +11,7 @@ function Navbar() {
     const currURL = location.pathname;
     const user = "Shelter" // change to get user type from context or local storage or something
     const id = localStorage.getItem("id");
-    const Navigate = useNavigate();
+    const navigate = useNavigate();
 
     const handleDeleteAccount = async () => {
     const accessToken = localStorage.getItem('access_token');
@@ -26,7 +26,6 @@ function Navbar() {
   };
 
     return (
-      <>
         <header>
           <Link to="/" className="link logo">
             PetPal
@@ -71,11 +70,15 @@ function Navbar() {
               <Dropdown.Item onClick={() => {localStorage.setItem('access_token', ''); 
                                           navigate('/');}}>
               Log Out
-            </Dropdown.Item>
+             </Dropdown.Item>
+            </Dropdown.Menu>
           </Dropdown>
 
           <Link to="/notifications" className={currURL === "/notifications" ? "active link notif_button float-right" : "link notif_button float-right"}>
             <img src={bell} />
           </Link>
+      </header>
+  )
+}
 
 export default Navbar;
