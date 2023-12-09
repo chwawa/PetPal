@@ -6,7 +6,8 @@ import Landing from './pages/Landing';
 import PetListings from './pages/PetListings/PetListings';
 import MyPets from './pages/MyPets';
 import MyApplications from './pages/MyApplications';
-import PetApplication from './pages/PetApplication';
+import ApplicationCreate from './pages/ApplicationCreate';
+import ApplicationUpdate from './pages/ApplicationUpdate';
 import ApplicationDetail from './pages/ApplicationDetail';
 import PetDetail from './pages/PetDetail';
 import Login from './pages/Login';
@@ -33,9 +34,10 @@ function App() {
           {/* change route depending on seeker or shelter */}
           <Route path="mypets/" element={<MyPets />} />
 
-          <Route path="pets/:id/application" element={<PetApplication />} />
+          <Route path="pets/:pid/application" element={<ApplicationCreate />} />
+          <Route path="pets/:pid/application/update" element={<ApplicationUpdate />} />
           <Route path="applications/" element={<MyApplications />} />
-          <Route path="applications/:id" element={<ApplicationDetail />} />
+          <Route path="applications/:aid" element={<ApplicationDetail />} />
 
 
           {/* SHELTER LINKS */}
@@ -45,6 +47,7 @@ function App() {
 
           <Route path="blog/:id" element={<ShelterBlog />} />
           <Route path="blog/:id/newpost" element={<NewPost />} />
+
 
 
           {/* SEEKER LINKS */}
