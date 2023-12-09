@@ -8,6 +8,7 @@ from rest_framework.exceptions import PermissionDenied
 from applications.models import Application
 from notifications.models import Notification
 from django.urls import reverse
+from ShelterBlog.models import ShelterBlog
 
 class SetPaginationComments(PageNumberPagination):
     page_size = 4
@@ -38,10 +39,10 @@ class ShelterBlogCommentListCreateAPIView(ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(commenter=self.request.user, 
-                        shelter=CustomUser.objects.get(id=self.kwargs['pk'], user_type='shelter'))
+                        blog=ShelterBlog.objects.get(id=self.kwargs['pk']))
         
     def get_queryset(self):
-        return ShelterBlogComment.objects.filter(shelter=self.kwargs['pk']).order_by('-creation_time')
+        return ShelterBlogComment.objects.filter(blog=self.kwargs['pk']).order_by('-creation_time')
 
 class ApplicationCommentListCreateAPIView(ListCreateAPIView):
     serializer_class = ApplicationCommentSerializer

@@ -5,6 +5,8 @@ import './ProfileView.css';
 import PetCard from '../../components/PetCard';
 import ShelterComment from '../../components/ShelterComment';
 import ShelterCommentCreation from '../../components/ShelterCommentCreation';
+import { Card } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 export default function PetDetail() {
   const { id } = useParams();
@@ -52,6 +54,7 @@ export default function PetDetail() {
       setLocation(json.location);
       setAbout(json.about);
       setProfilePic(json.profile_pic);
+      console.log(profilePic)
       fetchPets();
       fetchComments();
       console.log("Value:" + isShelter);
@@ -73,6 +76,7 @@ export default function PetDetail() {
         const allPets = await response.json();
         const filteredPets = allPets.results.filter(pet => pet.shelter === parseInt(id, 10));
         setPets(filteredPets);
+
       } else {
         throw new Error('Failed to fetch user pets');
       }
@@ -130,11 +134,37 @@ export default function PetDetail() {
 
   return (
     <main>
-      <div className="profile-update-container">
-        <div className="profile-update-box">
-          <h2>Profile View</h2>
-          <img className='profile-image' src={profilePic} alt="Avatar"/>
-          <div className="form-group">
+      <p className='back-nav' onClick={() => navigate(-1)}>{'< Back'}</p>
+      {/* <div className="profile-update-container">
+        <div className="profile-update-box"> */}
+          <h2>{name}'s Profile</h2>
+          <hr></hr>
+          <img className='profile-image' src={profilePic} alt="No Profile Picture"/>
+          
+          <Card style={{marginBottom: "30px"}}>
+              <Card.Body>
+                  {/* <Card.Title><h1>About</h1></Card.Title> */}
+                  {/* <Card.Text>{pet.biography}</Card.Text> */}
+                  <div className='info-grid'>
+                      <b>Name</b>
+                      <Card.Text>{name}</Card.Text>
+
+                      <b>Email</b>
+                      <Card.Text>{email}</Card.Text>
+
+                      <b>Phone</b>
+                      <Card.Text>{phone}</Card.Text>
+
+                      <b>Location</b>
+                      <Card.Text>{location}</Card.Text>
+
+                      <b>About</b>
+                      <Card.Text>{about}</Card.Text>
+                  </div>
+              </Card.Body>
+          </Card>
+
+          {/* <div className="form-group">
             <label htmlFor="name">Name:</label>
             <input type="text" id="name" value={name} readOnly />
           </div>
@@ -153,27 +183,46 @@ export default function PetDetail() {
           <div className="form-group">
             <label htmlFor="about">About:</label>
             <textarea id="about" value={about} readOnly />
+          </div> */}
+
+          <div className="form-group">
+            <h3>Check Out Our Blog!</h3>
+            <hr></hr>
+            <div className='button-container'>
+              <Button 
+                className='pink-button' 
+                size="lg" 
+                variant='light'
+                onClick={() => navigate(`/blog/${id}`)}
+              >
+                  Blog
+              </Button>
+            </div>
           </div>
+
           {isShelter && (
             <div className="form-group">
               <h3>Our Pets</h3>
-              <div className="pet-cards-container">
-                {pets.map(pet => (
-                  <PetCard
-                    key={pet.id}
-                    petID={pet.id}
-                    link={`/pets/${pet.id}`}
-                    cardImage={pet.picture}
-                    cardTitle={pet.name}
-                    actionButtons={<button>View Details</button>}
-                  />
-                ))}
+              <hr></hr>
+              <div className="pet-grid">
+                {pets.length != 0 ? pets.map(pet => (
+                  <>
+                    <PetCard
+                      key={pet.id}
+                      petID={pet.id}
+                      link={`/pets/${pet.species}/${pet.id}`}
+                      cardImage={pet.picture}
+                      cardTitle={pet.name}
+                    />
+                  </>
+                )) : <p>No one's here!</p>}
               </div>
             </div>
           )}
           {isShelter && (
             <div className="form-group">
               <h3>Our Reviews</h3>
+              <hr></hr>
               <div className="form-group">
                 <StarRating rating={averageRating} />
               </div>
@@ -193,8 +242,8 @@ export default function PetDetail() {
                 <ShelterCommentCreation shelter={id} />
             </div>
           )}
-        </div>
-      </div>
+        {/* </div>
+      </div> */}
     </main>
   );
 }

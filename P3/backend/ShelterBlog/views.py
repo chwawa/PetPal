@@ -63,12 +63,12 @@ class ShelterBlogUpdateView(APIView):
 class ShelterBlogListView(ListAPIView):
     permission_classes = [IsAuthenticated, IsShelter | IsSeeker]
     serializer_class = ShelterBlogSerializer
-    pagination_class =ShelterBlogPagination
+    pagination_class = ShelterBlogPagination
 
-    def get_queryset(self, shelter_id):
-        shelterblogs = ShelterBlog.objects.filter(shelter=shelter_id)
-        ordering = self.request.query_params.get('sort', 'creation_time')
-        if ordering:
-            shelterblogs = shelterblogs.order_by(ordering)
+    def get_queryset(self):
+        shelterblogs = ShelterBlog.objects.filter(shelter=self.kwargs['shelter_id']).order_by('-creation_time')
+        # ordering = self.request.query_params.get('sort', 'creation_time')
+        # if ordering:
+        #     shelterblogs = shelterblogs.order_by(ordering)
 
         return shelterblogs

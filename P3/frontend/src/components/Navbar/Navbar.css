@@ -22,18 +22,28 @@ header {
 .logo {
     font-size: x-large;
     font-weight: 500;
+    color: #ffffff;
+    margin-right: 2rem;
+    text-decoration: none;
 }
+
+.logo:hover {
+    font-size: x-large;
+    font-weight: 500;
+    color: white !important;
+}
+
 .logo_image {
     margin-left: 5px;
-    padding-top: 10px;
     display: inline;
 }
 
 .notif_button {
     display: inline-block;
     position: relative;
-    padding-top: 10px;
+    /* padding-top: 10px; */
     width: 25px;
+    transform: scale(0.8);
 }
 
 .notif_button .badge {
@@ -47,7 +57,7 @@ header {
 
 .notif_button:hover {
     filter: invert(10%) sepia(23%) saturate(405%) hue-rotate(317deg) brightness(103%) contrast(105%);
-    transform: scale(1.2);
+    transform: scale(0.9);
 }
 
 .float-right {
@@ -57,10 +67,6 @@ header {
 .myprofile-link {
     text-decoration: none;
     color: black;
-}
-
-.myprofile-dropdown {
-    margin-top: 10px;
 }
 
 .myprofile-dropdown:hover {
@@ -76,7 +82,11 @@ header {
     color: black;
 }
 
-@media only screen and (max-width: 540px) {
+.login-button {
+    margin-left: 20px;
+}
+
+@media only screen and (max-width: 659px) {
     .myprofile {
         display: none;
     }
@@ -92,7 +102,7 @@ header {
     .bars {
         display: inline;
         height: 30px;
-        padding-top: 10px;
+        padding-top: 5px;
         color: white;
         cursor: pointer;
     }

@@ -13,7 +13,7 @@ import PetDetail from './pages/PetDetail';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ShelterListings from './pages/ShelterListings';
-import InitialPageLayout from './components/InitialPageLayout';
+// import InitialPageLayout from './components/InitialPageLayout';
 import ProfileUpdate from './pages/ProfileUpdate';
 import ProfileView from './pages/ProfileView';
 import CreatePet from './pages/CreatePet';
@@ -27,6 +27,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<PageLayout />} >
+          <Route path="login/" element={<Login />} />
+          <Route path="signup/" element={<Signup />} />
+          
           <Route index element={<Landing />} />
           <Route path="pets/:species" element={<PetListings />} />
           <Route path="pets/:species/:id" element={<PetDetail />} />
@@ -58,10 +61,10 @@ function App() {
           <Route path="profile/update/:id" element={<ProfileUpdate />} />
         </Route>
 
-        <Route path="" element={<InitialPageLayout />} >
+        {/* <Route path="" element={<InitialPageLayout />} >
           <Route path="login/" element={<Login />} />
           <Route path="signup/" element={<Signup />} />
-        </Route>
+        </Route> */}
         
         <Route path="*" element={<Page404 />} />
       </Routes>

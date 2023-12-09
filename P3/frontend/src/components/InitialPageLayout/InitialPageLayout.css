@@ -20,9 +20,9 @@ header a.active {
     color: #fded9f;
 }
 
-/* header a:hover {
+header a:hover {
     color: #fff2b3;
-} */
+}
 
 header > a {
     text-decoration: none;

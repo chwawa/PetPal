@@ -64,7 +64,7 @@ export default function PetDetail() {
                         </div>
 
                         <div className='button-container'>
-                            <Button variant='light'>View Shelter</Button>
+                            <Button variant='light' onClick={() => navigate(`/profile/${pet.shelter}`)}>View Shelter</Button>
                             <Button variant='light' className='adopt-button'>Adopt</Button>
                         </div>
                         

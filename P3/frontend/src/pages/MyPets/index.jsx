@@ -19,6 +19,7 @@ export default function MyPets() {
             console.log(json.results)
             setPets(json.results);
         })
+        .catch((e) => console.log(`Error: ${e}`))
     }, []);
 
     return (

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import AreYouSureModal from '../../components/AreYouSureModal';
 
 import './ProfileUpdate.css';
 
@@ -15,6 +16,7 @@ export default function ProfileUpdate() {
   const [newPetListingPref, setNewPetListingPref] = useState('yes');
   const [profilePic, setProfilePic] = useState(null);
   const [errors, setErrors] = useState('');
+  const [show, setShow] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -103,6 +105,14 @@ export default function ProfileUpdate() {
 
   return (
     <main>
+      <p className='back-nav' onClick={() => setShow(true)}>{'< Back'}</p>
+      <AreYouSureModal 
+                title="Are you sure you want to go back?"
+                body="Your changes will be lost!"
+                show={show}
+                setShow={setShow}
+      />
+
       <div className="profile-update-container">
         <div className="profile-update-box">
           <h2>Update Profile</h2>
