@@ -12,7 +12,7 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import "./ArticleCard.css"
 
 
-export default function ArticleCard({cardTitle, cardBody, fetchedLikes, fetchedClicked}) {
+export default function ArticleCard({cardTitle, cardBody, fetchedLikes, fetchedClicked, articleID}) {
     const currUserId = localStorage.getItem('id');
     const accessToken = localStorage.getItem('access_token');
     const { id } = useParams()
@@ -26,6 +26,7 @@ export default function ArticleCard({cardTitle, cardBody, fetchedLikes, fetchedC
     const handleLike = () => {
         if (isClicked) {
             setLikes(likes - 1);
+
         } else {
             setLikes(likes + 1);
         }
@@ -40,14 +41,36 @@ export default function ArticleCard({cardTitle, cardBody, fetchedLikes, fetchedC
                 'Content-Type': 'application/json',
             },
         })
-            .then(response => response.json())
-            .then(json => {
-               
-                setComments(json.results)
-                console.log(comments)
-                
-            })
+        .then(response => response.json())
+        .then(json => {
+            
+            setComments(json.results)
+            console.log(json.results)
+            
+        })
     }, []);
+
+    const [text, setText] = useState("")
+    async function handleSubmit(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        var formData = new FormData();
+        formData.append('text', text)
+        formData.append('commenter', currUserId)
+        formData.append('blog', id) //change
+        
+        await fetch(`${url}/comments/shelter/${id}/blog`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
+            body: formData,
+        })
+        .then(() => console.log("Comment success"))
+
+        
+    }
 
     const allComments = () => {
         return (
@@ -56,10 +79,12 @@ export default function ArticleCard({cardTitle, cardBody, fetchedLikes, fetchedC
                     comment
                 ))}
 
-                <div className="comment-textbox">
-                    <Form.Control type="text" />
+              
+                <Form onSubmit={handleSubmit} className="comment-textbox">
+                    <Form.Control type="text" value={text} onChange={(e) => setText(e.target.value)}/>
                     <Button type="submit" variant="light" className="pink-button"><FontAwesomeIcon icon={faPaperPlane} /></Button>
-                </div>
+                </Form>
+                
                
             </Card.Footer>
         )

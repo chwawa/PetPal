@@ -5,17 +5,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-export default function AreYouSureModal({title, body, show, setShow, petID}) {
+export default function AreYouSureModal({title, body, show, setShow, petID, deleteAccount}) {
     let navigate = useNavigate();
     const url = 'http://127.0.0.1:8000' // change after deployment
     const accessToken = localStorage.getItem('access_token');
 
     const handleClose = () => setShow(false);
-
-    const handleDeleteClose = () => {
-        setShow(false);
-        window.location.reload();
-    }
 
     async function handleConfirm(event) {
         if (petID) {
@@ -29,9 +24,25 @@ export default function AreYouSureModal({title, body, show, setShow, petID}) {
             })
             .then(() => console.log("Delete successful"))
 
-            handleDeleteClose();
+            setShow(false);
+            window.location.reload();
             event.stopPropagation();
-
+        
+        } else if (deleteAccount) {
+            const id = localStorage.getItem("id");
+            const accessToken = localStorage.getItem('access_token');
+            const response = await fetch(`http://127.0.0.1:8000/accounts/user/${id}/deletion/`, {
+                method: 'DELETE',
+                headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+                },
+            });
+            localStorage.clear();
+            setShow(false);
+            navigate('/');
+            event.stopPropagation();
+        
         } else {
             navigate(-1);
         }

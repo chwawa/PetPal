@@ -54,3 +54,9 @@
 .form-group textarea {
   height: 80px;
 }
+
+.center {
+  margin-left: 140px;
+  text-align: center;
+  margin-bottom: 15px;
+}
