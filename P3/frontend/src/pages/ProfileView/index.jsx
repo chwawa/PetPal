@@ -6,6 +6,8 @@ import PetCard from '../../components/PetCard';
 import ShelterComment from '../../components/ShelterComment';
 import ShelterCommentCreation from '../../components/ShelterCommentCreation';
 
+import { Button } from 'react-bootstrap';
+
 export default function PetDetail() {
   const { id } = useParams();
   const [username, setUsername] = useState('');
@@ -154,19 +156,35 @@ export default function PetDetail() {
             <label htmlFor="about">About:</label>
             <textarea id="about" value={about} readOnly />
           </div>
+
+          <div className="form-group">
+            <h3>Check Out Our Blog!</h3>
+            <Button 
+              className='pink-button center' 
+              size="lg" 
+              variant='light'
+              onClick={() => navigate(`/blog/${id}`)}
+            >
+                Blog
+              </Button>
+          </div>
+
           {isShelter && (
             <div className="form-group">
               <h3>Our Pets</h3>
               <div className="pet-cards-container">
                 {pets.map(pet => (
-                  <PetCard
-                    key={pet.id}
-                    petID={pet.id}
-                    link={`/pets/${pet.id}`}
-                    cardImage={pet.picture}
-                    cardTitle={pet.name}
-                    actionButtons={<button>View Details</button>}
-                  />
+                  <>
+                    <PetCard
+                      key={pet.id}
+                      petID={pet.id}
+                      link={`/pets/${pet.id}`}
+                      cardImage={pet.picture}
+                      cardTitle={pet.name}
+                      // actionButtons={<button>View Details</button>}
+                    />
+                    <br></br>
+                  </>
                 ))}
               </div>
             </div>
