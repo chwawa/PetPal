@@ -7,5 +7,5 @@ urlpatterns = [
     # path('create/', ApplicationCreateView.as_view(), name='application-create'),
     path('<int:application_id>/', ApplicationDetailView.as_view(), name='application-detail'),
     path('<int:application_id>/update/', ApplicationUpdateView.as_view(), name='application_update'),
-    path('shelter/applications/', ShelterApplicationsListView.as_view(), name='shelter_applications'),
+    path('applications/', ShelterApplicationsListView.as_view(), name='shelter_applications'),
 ]
