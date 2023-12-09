@@ -22,10 +22,12 @@ export default function Login() {
 
     if (response.ok) {
       const data = await response.json();
+      console.log(data)
 
       localStorage.setItem('access_token', data.access_token);
       localStorage.setItem('refresh_token', data.refresh_token);
       localStorage.setItem('id', data.id);
+      localStorage.setItem('usertype', data.usertype);
       setError('');
 
       navigate('/');

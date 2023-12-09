@@ -4,7 +4,14 @@
 }
 
 .home-button {
+    margin: auto;
     margin-top: 20px;
     background-color: #f6bbc4 !important;
     color: white !important;
+}
+
+.lost-cat {
+    width: 60vh;
+    height: 60vh;
+    margin: auto
 }

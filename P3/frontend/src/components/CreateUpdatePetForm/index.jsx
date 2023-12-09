@@ -10,14 +10,32 @@ export default function CreateUpdatePetForm({method}) {
     let navigate = useNavigate();
     const url = 'http://127.0.0.1:8000' // change after deployment
     const { id } = useParams();
-    const shelterID = 1;
+    const shelterID = localStorage.getItem('id');
+    const accessToken = localStorage.getItem('access_token');
 
-    const [pet, setPet] = useState("");
+    const [picture, setPicture] = useState(false);
+    const [pet, setPet] = useState(
+        {
+            age: "",
+            biography: "",
+            breed: "",
+            colour: "white",
+            location: "",
+            name: "",
+            size: "small",
+            species: "dog",
+        }
+    );
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
 
     useEffect(() => {
-        fetch(`${url}/pets/${id}`)
+        fetch(`${url}/pets/${id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            },
+        })
         .then(res => res.json())
         .then(json => {
             setPet(json);
@@ -27,27 +45,49 @@ export default function CreateUpdatePetForm({method}) {
     const handleChange = (event) => {
         const key = event.target.id;
         const value = event.target.value;
-        setPet(pairs => ({...pairs, [key]:value}))
+        setPet({...pet, [key]:value})
     }
 
-    const handleSubmit = (event) => {
+    async function handleSubmit(event) {
         const form = event.currentTarget;
         if (form.checkValidity() == false) {
             event.preventDefault();
             event.stopPropagation();
         } else {
+            event.preventDefault();
+            event.stopPropagation();
             let fetchurl;
             if (method === "post") {
                 fetchurl = `${url}/pets/create/`;
             } else {
                 fetchurl = `${url}/pets/${id}/`;
             }
-            console.log(method)
-            fetch(fetchurl, {
+
+            // this is so messy but who cares at this point
+            var formData = new FormData();
+            formData.append('age', pet.age)
+            formData.append('biography', pet.biography)
+            formData.append('breed', pet.breed)
+            formData.append('colour', pet.colour)
+            formData.append('location', pet.location)
+            formData.append('name', pet.name)
+            formData.append('size', pet.size)
+            formData.append('species', pet.species)
+            formData.append('shelter', shelterID)
+            if (picture) {
+                var fileInput = document.getElementById('picture')
+                formData.append('picture', fileInput.files[0]);
+            }
+
+            await fetch(fetchurl, {
                 method: method,
-                body: pet, // shelter id????
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData,
             })
-            .then(() => console.log("Update pet detail successful"))
+            .then(() => console.log(pet))
             navigate("/mypets");
         }
         setValidated(true);
@@ -70,7 +110,7 @@ export default function CreateUpdatePetForm({method}) {
             
             <hr className='solid'></hr>
 
-            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+            <Form id="create-pet-form" noValidate validated={validated} onSubmit={handleSubmit}>
                 <div className='basic-info-container'>
                     <Form.Group className='form-group'>
                         <Form.Label className='required'>Pet Name</Form.Label>
@@ -81,7 +121,7 @@ export default function CreateUpdatePetForm({method}) {
                     </Form.Group>
                     <Form.Group className='form-group'>
                         <Form.Label>Pet Picture</Form.Label>
-                        <Form.Control id="picture" value={""} onChange={(event) => handleChange(event)} type="file"/>
+                        <Form.Control id="picture" onChange={(event) => {handleChange(event); setPicture(true)}} type="file"/>
                         <Form.Text>Choose the perfect picture that will steal everyone's hearts!</Form.Text>
                     </Form.Group>
                     <Form.Group className='form-group'>
@@ -126,8 +166,11 @@ export default function CreateUpdatePetForm({method}) {
                         </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className='form-group'>
-                        <Form.Label>Location</Form.Label>
-                        <Form.Control id="location" value={pet.location} onChange={(event) => handleChange(event)} placeholder="Enter a location..." type="text"/>
+                        <Form.Label className='required'>Location</Form.Label>
+                        <Form.Control id="location" value={pet.location} onChange={(event) => handleChange(event)} placeholder="Enter a location..." type="text" required/>
+                        <Form.Control.Feedback type="invalid">
+                            Please enter a location.
+                        </Form.Control.Feedback>
                     </Form.Group>
                 </div>
 

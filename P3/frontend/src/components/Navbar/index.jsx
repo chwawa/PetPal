@@ -1,16 +1,26 @@
-import React from "react";
+import { Link, useLocation } from "react-router-dom";
+
+import Dropdown from 'react-bootstrap/Dropdown';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import logo from "../../assets/logo.svg";
 import bell from "../../assets/notif_bell.svg";
-import { Link, useLocation } from "react-router-dom";
-import Dropdown from 'react-bootstrap/Dropdown';
-import "./Navbar.css";
+
+import "./Navbar.css"
+
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Navbar() {
     const location = useLocation();
     const currURL = location.pathname;
-    const user = "Shelter" // change to get user type from context or local storage or something
+    const user = localStorage.getItem("usertype");
     const id = localStorage.getItem("id");
+
+    const [bars, setBars] = useState(false)
+
     const navigate = useNavigate();
 
     const handleDeleteAccount = async () => {
@@ -27,7 +37,7 @@ function Navbar() {
 
     return (
         <header>
-          <Link to="/" className="link logo">
+          <Link to="/" className="logo">
             PetPal
             <img src={logo} className="logo_image"/>
           </Link>
@@ -37,16 +47,16 @@ function Navbar() {
           </Link>
 
           {/* Change to My Applications is seeker; My Pets if shelter */}
-          {user == "Shelter"
+          {user == "shelter"
             ? <Link to="/mypets" className={currURL.startsWith("/mypets") ? "active link" : "link"}>
                 My Pets
               </Link>
-            : <Link to="/myapplications" className={currURL.startsWith("/myapplications") ? "active link" : "link"}>
+            : <Link to="/applications" className={currURL.startsWith("/applications") ? "active link" : "link"}>
                 My Applications
               </Link>
           }
           
-          <Dropdown className="float-right">
+          <Dropdown className="myprofile float-right">
             <Dropdown.Toggle variant="light" className="myprofile-dropdown">
               My Profile
             </Dropdown.Toggle>
@@ -58,7 +68,7 @@ function Navbar() {
               </Dropdown.Item>
 
               <Dropdown.Item>
-                <Link to={`/profile/update/${id}`} className="myprofile-link" >
+                <Link to={`/profile/update/${id}`} className="myprofile-link">
                   Edit Profile
                 </Link>
               </Dropdown.Item>
@@ -77,6 +87,36 @@ function Navbar() {
           <Link to="/notifications" className={currURL === "/notifications" ? "active link notif_button float-right" : "link notif_button float-right"}>
             <img src={bell} />
           </Link>
+          
+          {/* Show if screen is small */}
+          <FontAwesomeIcon icon={faBars} className="bars float-right" onClick={() => setBars(true)}/>
+          <Offcanvas show={bars} placement="end" onHide={() => setBars(false)}>
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title>PetPal</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <Link to="/" className="offcanvas-link">
+                <p>Home</p>
+              </Link>
+              {user == "shelter"
+                ? <Link to="/mypets" className="offcanvas-link">
+                    <p>My Pets</p>
+                  </Link>
+                : <Link to="/applications" className="offcanvas-link">
+                    <p>My Applications</p>
+                  </Link>
+              }
+              <Link to={`/profile/${id}`} className="offcanvas-link">
+                <p>View Profile</p>
+              </Link>
+              <Link to={`/profile/update/${id}`} className="offcanvas-link">
+                <p>Edit Profile</p>
+              </Link>
+              <Link to={""} className="offcanvas-link">
+                <p>Log Out</p>
+              </Link>
+            </Offcanvas.Body>
+          </Offcanvas>
       </header>
   )
 }

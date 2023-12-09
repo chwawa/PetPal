@@ -8,18 +8,28 @@ import { useNavigate } from 'react-router-dom';
 export default function AreYouSureModal({title, body, show, setShow, petID}) {
     let navigate = useNavigate();
     const url = 'http://127.0.0.1:8000' // change after deployment
+    const accessToken = localStorage.getItem('access_token');
 
     const handleClose = () => setShow(false);
 
-    const handleConfirm = (event) => {
+    const handleDeleteClose = () => {
+        setShow(false);
+        window.location.reload();
+    }
+
+    async function handleConfirm(event) {
         if (petID) {
             // Need to be authorized
-            fetch(`${url}/pets/${petID}`, {
+            await fetch(`${url}/pets/${petID}`, {
                 method: "delete",
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
             })
             .then(() => console.log("Delete successful"))
 
-            handleClose();
+            handleDeleteClose();
             event.stopPropagation();
 
         } else {

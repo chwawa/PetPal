@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css'; // code will run if you comment this line out
+// import 'bootstrap-icons/font/bootstrap-icons.css'; // code will run if you comment this line out
 
 import './ShelterListing.css'
 import ShelterItem from "../../components/ShelterItem";

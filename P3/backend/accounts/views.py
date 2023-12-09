@@ -30,7 +30,8 @@ class LoginView(APIView):
             return Response({
                 'access_token': access_token,
                 'refresh_token': refresh_token,
-                'id': user.id
+                'id': user.id,
+                'usertype': user.user_type
             })
         else: 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

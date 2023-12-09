@@ -32,10 +32,8 @@ header {
 .notif_button {
     display: inline-block;
     position: relative;
-    /* margin-top: 0.3rem; */
     padding-top: 10px;
     width: 25px;
-    
 }
 
 .notif_button .badge {
@@ -67,4 +65,35 @@ header {
 
 .myprofile-dropdown:hover {
     background-color: #fded9f !important;
+}
+
+.bars {
+    display: none;
+}
+
+.offcanvas-link {
+    text-decoration: none;
+    color: black;
+}
+
+@media only screen and (max-width: 540px) {
+    .myprofile {
+        display: none;
+    }
+    
+    .notif_button {
+        display: none;
+    }
+
+    .link {
+        display: none;
+    }
+
+    .bars {
+        display: inline;
+        height: 30px;
+        padding-top: 10px;
+        color: white;
+        cursor: pointer;
+    }
 }

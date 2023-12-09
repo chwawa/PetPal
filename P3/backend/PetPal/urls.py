@@ -33,6 +33,7 @@ urlpatterns = [
     path('comments/', include('comments.urls', namespace='comments')),
     path('notifications/', include('notifications.urls', namespace='notifications')),
     path('pets/', include('pets.urls', namespace='pets')),
+    path('shelterblog/', include('ShelterBlog.urls', namespace='ShelterBlog')),
 ]
 
 if settings.DEBUG:
