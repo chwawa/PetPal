@@ -68,8 +68,6 @@ export default function ArticleCard({cardTitle, cardBody, fetchedLikes, fetchedC
             body: formData,
         })
         .then(() => console.log("Comment success"))
-
-        
     }
 
     const allComments = () => {
@@ -78,13 +76,11 @@ export default function ArticleCard({cardTitle, cardBody, fetchedLikes, fetchedC
                 {comments.map(comment => (
                     comment
                 ))}
-
               
                 <Form onSubmit={handleSubmit} className="comment-textbox">
                     <Form.Control type="text" value={text} onChange={(e) => setText(e.target.value)}/>
                     <Button type="submit" variant="light" className="pink-button"><FontAwesomeIcon icon={faPaperPlane} /></Button>
-                </Form>
-                
+                </Form>    
                
             </Card.Footer>
         )

@@ -68,6 +68,10 @@ function Navbar() {
                   </Link>
               ) 
             : null}
+
+          <Link to="/shelters" className={(currURL.startsWith("/shelters")) ? "active link" : "link"}>
+            All Shelters
+          </Link>
           
           { localStorage.getItem("access_token")
             ? (<><Dropdown className="myprofile float-right">
@@ -132,7 +136,13 @@ function Navbar() {
                     <p>My Applications</p>
                   </Link>
               }
+              <Link to="/shelters" className="offcanvas-link">
+                <p>All Shelters</p>
+              </Link>
               <hr></hr>
+              <Link to="/notifications" className="offcanvas-link">
+                <p>Notifications</p>
+              </Link>
               <Link to={`/profile/${id}`} className="offcanvas-link">
                 <p>View Profile</p>
               </Link>
