@@ -2,3 +2,21 @@
     width: 90%;
     margin: auto;
 }
+
+.button-container {
+    text-align: center;
+    margin: auto;
+    margin-bottom: 40px;
+    margin-top: 40px;
+    width: 50%;
+}
+
+.new-post-button {
+    background-color: #f6bbc4 !important;
+    color: #ffffff !important;
+}
+
+.new-post-button:hover {
+    background-color: #ffffff !important;
+    color: #f6bbc4 !important;
+}

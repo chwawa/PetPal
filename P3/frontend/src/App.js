@@ -19,6 +19,8 @@ import CreatePet from './pages/CreatePet';
 import UpdatePet from './pages/UpdatePet';
 
 import ShelterBlog from './pages/ShelterBlog/ShelterBlog';
+import NewPost from './pages/NewPost/NewPost'; 
+
 function App() {
   return (
     <BrowserRouter>
@@ -42,6 +44,7 @@ function App() {
 
 
           <Route path="blog/:id" element={<ShelterBlog />} />
+          <Route path="blog/:id/newpost" element={<NewPost />} />
 
 
           {/* SEEKER LINKS */}
@@ -51,10 +54,12 @@ function App() {
           <Route path="profile/:id" element={<ProfileView />} />
           <Route path="profile/update/:id" element={<ProfileUpdate />} />
         </Route>
+
         <Route path="" element={<InitialPageLayout />} >
           <Route path="login/" element={<Login />} />
           <Route path="signup/" element={<Signup />} />
         </Route>
+        
         <Route path="*" element={<Page404 />} />
       </Routes>
     </BrowserRouter>

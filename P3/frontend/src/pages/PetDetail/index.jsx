@@ -34,7 +34,7 @@ export default function PetDetail() {
                                 ? <Badge bg="success">Active</Badge>
                                 : <Badge bg="secondary">Unactive</Badge>}
                         </Card.Subtitle>
-                        <Card.Img style={{height: "50vh"}} src={pet.picture} />
+                        <Card.Img className='pet-pic' src={pet.picture} />
                     </Card.Body>
                 </Card>
 

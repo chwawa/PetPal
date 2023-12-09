@@ -3,8 +3,14 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/logo.svg"
 import bell from "../../assets/notif_bell.svg"
 import Dropdown from 'react-bootstrap/Dropdown';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+
+import Offcanvas from 'react-bootstrap/Offcanvas';
+
 import "./Navbar.css"
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Navbar() {
 
@@ -13,11 +19,12 @@ function Navbar() {
     const user = localStorage.getItem("usertype");
     const id = localStorage.getItem("id");
     const Navigate = useNavigate();
+    const [bars, setBars] = useState(false)
 
     return (
       <>
         <header>
-          <Link to="/" className="link logo">
+          <Link to="/" className="logo">
             PetPal
             <img src={logo} className="logo_image"/>
           </Link>
@@ -36,7 +43,7 @@ function Navbar() {
               </Link>
           }
           
-          <Dropdown className="float-right">
+          <Dropdown className="myprofile float-right">
             <Dropdown.Toggle variant="light" className="myprofile-dropdown">
               My Profile
             </Dropdown.Toggle>
@@ -61,6 +68,36 @@ function Navbar() {
           <Link to="/notifications" className={currURL === "/notifications" ? "active link notif_button float-right" : "link notif_button float-right"}>
             <img src={bell} />
           </Link>
+
+          {/* Show if screen is small */}
+          <FontAwesomeIcon icon={faBars} className="bars float-right" onClick={() => setBars(true)}/>
+          <Offcanvas show={bars} placement="end" onHide={() => setBars(false)}>
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title>PetPal</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <Link to="/" className="offcanvas-link">
+                <p>Home</p>
+              </Link>
+              {user == "shelter"
+                ? <Link to="/mypets" className="offcanvas-link">
+                    <p>My Pets</p>
+                  </Link>
+                : <Link to="/applications" className="offcanvas-link">
+                    <p>My Applications</p>
+                  </Link>
+              }
+              <Link to={`/profile/${id}`} className="offcanvas-link">
+                <p>View Profile</p>
+              </Link>
+              <Link to={`/profile/update/${id}`} className="offcanvas-link">
+                <p>Edit Profile</p>
+              </Link>
+              <Link to={""} className="offcanvas-link">
+                <p>Log Out</p>
+              </Link>
+            </Offcanvas.Body>
+          </Offcanvas>
 
         </header>
       </>
