@@ -1,44 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import './ShelterCommentCreation.css'
+import { useNavigate } from 'react-router-dom';
+import './ShelterCommentCreation.css';
 
-export default function ShelterCommentCreation({ shelter }) {
+const ShelterCommentCreation = ({ shelter }) => {
   const [name, setName] = useState('');
   const [profilePic, setProfilePic] = useState(null);
   const [commentText, setCommentText] = useState('');
+  const [rating, setRating] = useState(0); 
+  const navigate = useNavigate();
+  const url = 'http://127.0.0.1:8000'; 
 
   useEffect(() => {
-    const userId= localStorage.getItem('id');
     const fetchUserData = async () => {
       try {
-        const accessToken = localStorage.getItem('token');
-        const response = await fetch(`http://127.0.0.1:8000/accounts/user/${userId}/profile/`, {
+        const accessToken = localStorage.getItem('access_token');
+        const id = localStorage.getItem('id');
+
+        const response = await fetch(`${url}/accounts/user/${id}/profile/`, {
           method: 'GET',
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
           },
         });
 
-        if (response.ok) {
-          const userData = await response.json();
-          setName(userData.name);
-          console.log(name);
-          setProfilePic(userData.profile_pic);
-        } else {
-          console.error('Error fetching user data:', response.status);
+        if (!response.ok) {
+          navigate('*');
+          return;
         }
+
+        const json = await response.json();
+        setName(json.name);
+        setProfilePic(json.profile_pic);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
     };
 
     fetchUserData();
-  }, [shelter]);
+  }, [navigate, url]);
 
   const handlePostComment = async () => {
     try {
-      const accessToken = localStorage.getItem('token');
-      const response = await fetch(`http://127.0.0.1:8000/comments/shelter/${shelter}`, {
+      const accessToken = localStorage.getItem('access_token');
+      const userId = localStorage.getItem('id');
+      const response = await fetch(`http://127.0.0.1:8000/comments/shelter/${shelter}/`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -48,6 +54,7 @@ export default function ShelterCommentCreation({ shelter }) {
           commenter: userId,
           shelter: shelter,
           text: commentText,
+          rating: rating
         }),
       });
 
@@ -63,9 +70,19 @@ export default function ShelterCommentCreation({ shelter }) {
 
   return (
     <div className='commentContainer'>
-      {profilePic && <img src={profilePic} alt={`${name}'s profile pic`} />}
+      {profilePic && <img className="profile-pic" src={profilePic} alt={`${name}'s profile pic`} />}
       <div className='userInfo'>
-        <p>{name}</p>
+        <div className="rating-container">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <span
+              key={star}
+              className={star <= rating ? 'star-filled' : 'star-empty'}
+              onClick={() => setRating(star)}
+            >
+              ★
+            </span>
+          ))}
+        </div>
         <input
           type="text"
           value={commentText}
@@ -76,5 +93,9 @@ export default function ShelterCommentCreation({ shelter }) {
       </div>
     </div>
   );
-}
+};
+
+export default ShelterCommentCreation;
+
+
 

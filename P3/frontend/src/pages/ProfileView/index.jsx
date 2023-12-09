@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import './ProfileView.css';
 import PetCard from '../../components/PetCard';
 import ShelterComment from '../../components/ShelterComment';
-import ShelterCommentCreation from '../../components/ShelterComment';
+import ShelterCommentCreation from '../../components/ShelterCommentCreation';
 
 export default function PetDetail() {
   const { id } = useParams();
@@ -18,6 +18,10 @@ export default function PetDetail() {
   const [pets, setPets] = useState([]);
   const [comments, setComments] = useState([]);
   const [isShelter, setIsShelter] = useState(false);
+  const [averageRating, setAverageRating] = useState(0);
+  const [page, setPage] = useState(1);
+  const [next, setNext]  = useState(true);
+  const [prev, setPrev] = useState(true);
   const url = 'http://127.0.0.1:8000'; // change after deployment
   const navigate = useNavigate();
 
@@ -52,7 +56,7 @@ export default function PetDetail() {
       fetchComments();
       console.log("Value:" + isShelter);
     });
-  }, [id]);
+  }, [id, page]);
 
   const fetchPets = async () => {
     try {
@@ -80,7 +84,7 @@ export default function PetDetail() {
   const fetchComments = async () => {
     try {
       const accessToken = localStorage.getItem('access_token');
-      const response = await fetch(`${url}/comments/shelter/${id}/`, {
+      const response = await fetch(`${url}/comments/shelter/${id}/?page=${page}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
@@ -90,7 +94,11 @@ export default function PetDetail() {
 
       if (response.ok) {
         const allComments = await response.json();
+        const averageRating = allComments.results.reduce((sum, comment) => sum + comment.rating, 0) / allComments.results.length;
+        setAverageRating(averageRating);
         setComments(allComments.results);
+        setNext(allComments.next);
+        setPrev(allComments.previous) 
       } else {
         throw new Error('Failed to fetch shelter comments');
       }
@@ -99,12 +107,33 @@ export default function PetDetail() {
     }
   };
 
+  const StarRating = ({ rating }) => {
+    const starStyle = {
+      fontSize: '24px',
+      marginRight: '4px', 
+    };
+  
+    return (
+      <div className="rating-container">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <span
+            key={star}
+            className={star <= rating ? 'star-filled' : 'star-empty'}
+            style={starStyle}
+          >
+            ★
+          </span>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <main>
       <div className="profile-update-container">
         <div className="profile-update-box">
           <h2>Profile View</h2>
-          <img src={profilePic} alt="Avatar"/>
+          <img className='profile-image' src={profilePic} alt="Avatar"/>
           <div className="form-group">
             <label htmlFor="name">Name:</label>
             <input type="text" id="name" value={name} readOnly />
@@ -127,7 +156,7 @@ export default function PetDetail() {
           </div>
           {isShelter && (
             <div className="form-group">
-              <h3>Your Pets</h3>
+              <h3>Our Pets</h3>
               <div className="pet-cards-container">
                 {pets.map(pet => (
                   <PetCard
@@ -136,8 +165,6 @@ export default function PetDetail() {
                     link={`/pets/${pet.id}`}
                     cardImage={pet.picture}
                     cardTitle={pet.name}
-                    cardSubtitle={`Species: ${pet.species}`}
-                    cardText={`Breed: ${pet.breed}`}
                     actionButtons={<button>View Details</button>}
                   />
                 ))}
@@ -146,15 +173,25 @@ export default function PetDetail() {
           )}
           {isShelter && (
             <div className="form-group">
+              <h3>Our Reviews</h3>
+              <div className="form-group">
+                <StarRating rating={averageRating} />
+              </div>
               <div className="comments-container">
                 {comments.map((comment) => (
-                  <ShelterComment key={comment.id} text={comment.text} commenter={comment.commenter} />
+                  <ShelterComment key={comment.id} text={comment.text} commenter={comment.commenter} rating={comment.rating} />
                 ))}
               </div>
+              <p>
+                {prev ? <button onClick={() => setPage(page - 1)}>Previous</button> : <button>Previous</button>}
+                {next ? <button onClick={() => setPage(page + 1)}>Next</button> : <button>Next</button>}
+              </p>
             </div>
           )}
           {isShelter && (
-            <ShelterCommentCreation shelter={id} />
+            <div className="form-group">
+                <ShelterCommentCreation shelter={id} />
+            </div>
           )}
         </div>
       </div>
