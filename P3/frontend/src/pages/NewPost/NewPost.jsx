@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/esm/Button';
@@ -10,9 +10,11 @@ import AreYouSureModal from '../../components/AreYouSureModal';
 export default function CreatePet() {
     let navigate = useNavigate();
     const url = 'http://127.0.0.1:8000' // change after deployment
-    const shelterID = 1;
+    const { id } = useParams();
+    const accessToken = localStorage.getItem('access_token');
 
-    const  [post, setPost] = useState("");
+
+    const [post, setPost] = useState("");
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
 
@@ -28,11 +30,23 @@ export default function CreatePet() {
             event.preventDefault();
             event.stopPropagation();
         } else {
-            fetch(`${url}/pets/create/`, {
+            event.preventDefault();
+            event.stopPropagation();
+            var formData = new FormData();
+            formData.append('title', post.title);
+            formData.append('content', post.content);
+            formData.append('likes', []);
+            formData.append('shelter', id);
+
+            fetch(`${url}/shelterblog/${id}/blog/create/`, {
                 method: "post",
-                body: post, //shelter id???
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData, 
             })
-            .then(() => console.log("Successfully created a new [pst]!"))
+            .then(() => console.log("Successfully created a new post!"))
             
             navigate(-1);
         }
