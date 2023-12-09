@@ -42,7 +42,7 @@ class ShelterBlogCommentListCreateAPIView(ListCreateAPIView):
                         blog=ShelterBlog.objects.get(id=self.kwargs['pk']))
         
     def get_queryset(self):
-        return ShelterBlogComment.objects.filter(blog=self.kwargs['pk']).order_by('-creation_time')
+        return ShelterBlogComment.objects.filter(blog=self.kwargs['pk']).order_by('creation_time')
 
 class ApplicationCommentListCreateAPIView(ListCreateAPIView):
     serializer_class = ApplicationCommentSerializer

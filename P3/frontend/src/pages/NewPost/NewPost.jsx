@@ -35,18 +35,17 @@ export default function CreatePet() {
             var formData = new FormData();
             formData.append('title', post.title);
             formData.append('content', post.content);
-            formData.append('likes', []);
             formData.append('shelter', id);
 
             fetch(`${url}/shelterblog/${id}/blog/create/`, {
-                method: "post",
+                method: "POST",
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 body: formData, 
             })
-            .then(() => console.log("Successfully created a new post!"))
+            // .then(() => console.log("Successfully created a new post!"))
             
             navigate(-1);
         }

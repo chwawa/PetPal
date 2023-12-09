@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import Card from "react-bootstrap/Card";
 import Heart from "react-animated-heart";
@@ -22,6 +23,8 @@ export default function ArticleCard({cardTitle, cardBody, fetchedLikes, fetchedC
     const [isClicked, setIsClicked] = useState(fetchedClicked); //set to true or false from fetch
     const [showComments, setShowComments] = useState(false);
     const [comments, setComments] = useState([])
+    const [page, setPage] = useState(1);
+    const [next, setNext] = useState(true);
 
     const handleLike = () => {
         if (isClicked) {
@@ -33,21 +36,41 @@ export default function ArticleCard({cardTitle, cardBody, fetchedLikes, fetchedC
         setIsClicked(!isClicked);
     };
 
-    useEffect(() => {
-        fetch(`${url}/comments/shelter/${id}/blog`, {
+    const fetchComments = () => {
+        fetch(`${url}/comments/blog/${articleID}?page=${page}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
             },
         })
-        .then(response => response.json())
-        .then(json => {
-            
-            setComments(json.results)
-            console.log(json.results)
-            
+        .then(res => res.json())
+        .then(data => {
+            const newComments = data.results;
+            console.log("data:", data.results)
+            console.log(page)
+            setComments([...comments, ...newComments]);
+            if (!data.next) {
+                setNext(false);
+            } 
         })
+        setPage(page + 1);
+    }
+
+    useEffect(() => {
+        // fetch(`${url}/comments/blog/${articleID}/`, {
+        //     method: 'GET',
+        //     headers: {
+        //         'Authorization': `Bearer ${accessToken}`,
+        //         'Content-Type': 'application/json',
+        //     },
+        // })
+        // .then(response => response.json())
+        // .then(json => {
+        //     setComments(json)
+        //     console.log(json)
+        // })
+        fetchComments();
     }, []);
 
     const [text, setText] = useState("")
@@ -57,13 +80,12 @@ export default function ArticleCard({cardTitle, cardBody, fetchedLikes, fetchedC
         var formData = new FormData();
         formData.append('text', text)
         formData.append('commenter', currUserId)
-        formData.append('blog', id) //change
+        formData.append('blog', articleID) //change
         
-        await fetch(`${url}/comments/shelter/${id}/blog`, {
+        await fetch(`${url}/comments/blog/${articleID}/`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/json',
             },
             body: formData,
         })
@@ -73,10 +95,20 @@ export default function ArticleCard({cardTitle, cardBody, fetchedLikes, fetchedC
     const allComments = () => {
         return (
             <Card.Footer>
-                {comments.map(comment => (
-                    comment
-                ))}
-              
+                <div className="comments-container">
+                    <InfiniteScroll
+                        dataLength={comments.length}
+                        next={fetchComments}
+                        hasMore={next}
+                        loader={<p>Loading comments...</p>}
+                        endMessage={<p>No more comments!</p>}
+                    >
+                        {comments.map(comment => (
+                            <p>User{comment.commenter}: {comment.text}</p>
+                        ))}
+                    </InfiniteScroll>
+                </div>
+                
                 <Form onSubmit={handleSubmit} className="comment-textbox">
                     <Form.Control type="text" value={text} onChange={(e) => setText(e.target.value)}/>
                     <Button type="submit" variant="light" className="pink-button"><FontAwesomeIcon icon={faPaperPlane} /></Button>
