@@ -3,3 +3,11 @@
     height: 20vw;
     object-fit: cover;
 }
+
+.trash {
+    margin-top: 6px;
+}
+
+.trash:hover {
+    transform: scale(1.2);
+}

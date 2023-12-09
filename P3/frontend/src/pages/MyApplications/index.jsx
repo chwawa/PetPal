@@ -9,14 +9,14 @@ export default function MyApplications() {
 
     // handle get all seeker's applications
 
-    // useEffect(() => {
-    //     fetch(`${url}/pets/?seeker=${seekerID}`)
-    //     .then(res => res.json())
-    //     .then(json => {
-    //         console.log(json.results)
-    //         setPets(json.results);
-    //     })
-    // }, []);
+    useEffect(() => {
+        fetch(`${url}/pets/?seeker=${seekerID}`)
+        .then(res => res.json())
+        .then(json => {
+            console.log(json.results)
+            setPets(json.results);
+        })
+    }, []);
 
     return (
         <main>

@@ -1,0 +1,18 @@
+.application-detail-layout {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.basic-info-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 20px;
+}
+
+.back-nav {
+    text-decoration: none;
+    color:#f6bbc4;
+    font-size: large;
+}
+
+

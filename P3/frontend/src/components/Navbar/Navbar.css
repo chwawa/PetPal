@@ -3,23 +3,20 @@ header {
     padding: 25px;  
 }
   
-header a {
+.link {
     color: #ffffff;
     font-size: 1rem;
     margin-right: 2rem;
+    text-decoration: none;
 }
 
-header a.active {
+.active {
     font-weight: bold;
     color: #fded9f;
 }
 
-header a:hover {
+.link:hover {
     color: #fff2b3;
-}
-
-header > a {
-    text-decoration: none;
 }
 
 .logo {
@@ -28,12 +25,17 @@ header > a {
 }
 .logo_image {
     margin-left: 5px;
+    padding-top: 10px;
+    display: inline;
 }
 
 .notif_button {
     display: inline-block;
     position: relative;
-    margin-top: 0.3rem;
+    /* margin-top: 0.3rem; */
+    padding-top: 10px;
+    width: 25px;
+    
 }
 
 .notif_button .badge {
@@ -47,10 +49,20 @@ header > a {
 
 .notif_button:hover {
     filter: invert(10%) sepia(23%) saturate(405%) hue-rotate(317deg) brightness(103%) contrast(105%);
+    transform: scale(1.2);
 }
 
 .float-right {
     float: right;
+}
+
+.myprofile-link {
+    text-decoration: none;
+    color: black;
+}
+
+.myprofile-dropdown {
+    margin-top: 10px;
 }
 
 .myprofile-dropdown:hover {
