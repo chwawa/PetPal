@@ -1,14 +1,13 @@
-/* ShelterCommentCreation.css */
-
 .commentContainer {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
     border: 1px solid gray;
     padding: 10px;
     box-sizing: border-box;
   }
   
-  img {
+.profile-pic {
+    grid-column: 1;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -16,6 +15,7 @@
   }
   
   .userInfo {
+    grid-column: 2;
     display: flex;
     flex-direction: column;
   }
@@ -26,7 +26,7 @@
   }
   
   input {
-    margin-bottom: 10px; /* Add margin to separate input and button */
+    margin-bottom: 10px; 
   }
   
   button {
@@ -41,4 +41,19 @@
   button:hover {
     background-color: #45a049;
   }
+
+  .rating-container {
+    margin-bottom: 10px;
+  }
+  
+  .star-filled {
+    color: gold; 
+    cursor: pointer;
+  }
+  
+  .star-empty {
+    color: #ccc;
+    cursor: pointer;
+  }
+  
   

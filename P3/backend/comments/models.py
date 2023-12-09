@@ -7,6 +7,7 @@ class ShelterReviewComment(models.Model):
     commenter = models.ForeignKey(CustomUser,on_delete=models.SET_NULL, null=True, related_name='shelter_comments')
     shelter = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='shelter_reviews')
     text = models.TextField()
+    rating = models.IntegerField(default=0)
     creation_time = models.DateTimeField(auto_now_add=True)
 
 class ApplicationComment(models.Model):

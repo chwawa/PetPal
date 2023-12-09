@@ -1,7 +1,7 @@
 .shelter-card {
     display: grid;
     grid-template-columns: auto 1fr;
-    width: 450px; /* Adjust the width as needed */
+    width: 450px;
     margin: 10px;
     border: 1px solid #ccc;
     padding: 10px;
@@ -9,7 +9,7 @@
   }
   
   .card-img-container {
-    max-width: 120px; /* Adjust the width of the image container */
+    max-width: 120px; 
     margin-right: 20px;
   }
   
