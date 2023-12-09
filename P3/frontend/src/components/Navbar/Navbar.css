@@ -82,6 +82,10 @@ header {
     color: black;
 }
 
+.login-button {
+    margin-left: 20px;
+}
+
 @media only screen and (max-width: 659px) {
     .myprofile {
         display: none;

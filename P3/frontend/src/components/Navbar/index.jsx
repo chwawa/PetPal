@@ -110,7 +110,7 @@ function Navbar() {
               </Link></>
               ) 
             : <Button 
-                className="myprofile float-right" 
+                className="float-right login-button" 
                 variant="light"
                 onClick={() => navigate('/login')}
               >
@@ -119,7 +119,8 @@ function Navbar() {
 
           
           {/* Show if screen is small */}
-          <FontAwesomeIcon icon={faBars} className="bars float-right" onClick={() => setBars(true)}/>
+          { localStorage.getItem("access_token")
+          ? <><FontAwesomeIcon icon={faBars} className="bars float-right" onClick={() => setBars(true)}/>
           <Offcanvas show={bars} placement="end" onHide={() => setBars(false)}>
             <Offcanvas.Header closeButton>
               <Offcanvas.Title>PetPal</Offcanvas.Title>
@@ -158,7 +159,8 @@ function Navbar() {
                 <p>Log Out</p>
               </Link>
             </Offcanvas.Body>
-          </Offcanvas>
+          </Offcanvas></>
+          : null}
       </header>
     </>
   )

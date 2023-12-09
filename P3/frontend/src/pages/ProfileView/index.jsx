@@ -54,6 +54,7 @@ export default function PetDetail() {
       setLocation(json.location);
       setAbout(json.about);
       setProfilePic(json.profile_pic);
+      console.log(profilePic)
       fetchPets();
       fetchComments();
       console.log("Value:" + isShelter);
@@ -75,6 +76,7 @@ export default function PetDetail() {
         const allPets = await response.json();
         const filteredPets = allPets.results.filter(pet => pet.shelter === parseInt(id, 10));
         setPets(filteredPets);
+
       } else {
         throw new Error('Failed to fetch user pets');
       }
@@ -137,7 +139,7 @@ export default function PetDetail() {
         <div className="profile-update-box"> */}
           <h2>{name}'s Profile</h2>
           <hr></hr>
-          <img className='profile-image' src={profilePic} alt="Avatar"/>
+          <img className='profile-image' src={profilePic} alt="No Profile Picture"/>
           
           <Card style={{marginBottom: "30px"}}>
               <Card.Body>
@@ -203,7 +205,7 @@ export default function PetDetail() {
               <h3>Our Pets</h3>
               <hr></hr>
               <div className="pet-grid">
-                {pets.map(pet => (
+                {pets.length != 0 ? pets.map(pet => (
                   <>
                     <PetCard
                       key={pet.id}
@@ -213,7 +215,7 @@ export default function PetDetail() {
                       cardTitle={pet.name}
                     />
                   </>
-                ))}
+                )) : <p>No one's here!</p>}
               </div>
             </div>
           )}
