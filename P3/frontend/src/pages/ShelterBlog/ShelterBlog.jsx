@@ -46,6 +46,8 @@ export default function ShelterBlog() {
 
     return (
         <main>
+            <p className='back-nav' onClick={() => navigate(-1)}>{'< Back'}</p>
+            
             <h1>{shelterName}'s Blog</h1>
 
             { id == currUserId
