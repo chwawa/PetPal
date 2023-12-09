@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import './ProfileUpdate.css'; 
+import './ProfileUpdate.css';
 
 export default function ProfileUpdate() {
   const [username, setUsername] = useState('');
@@ -20,7 +20,7 @@ export default function ProfileUpdate() {
 
   useEffect(() => {
     const currUserId = localStorage.getItem('id');
-    
+
     const fetchData = async () => {
       if (currUserId === id) {
         const accessToken = localStorage.getItem('access_token');
@@ -75,7 +75,7 @@ export default function ProfileUpdate() {
     const accessToken = localStorage.getItem('access_token');
     try {
       const response = await fetch(`http://127.0.0.1:8000/accounts/user/${id}/updation/`, {
-        method: 'PUT', 
+        method: 'PUT',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },
@@ -83,13 +83,13 @@ export default function ProfileUpdate() {
       });
 
       if (response.ok) {
-        navigate(`/profile/${id}/`); 
+        navigate(`/profile/${id}/`);
       } else {
         const errorData = await response.json();
         setErrors(errorData);
       }
     } catch (error) {
-      navigate("*");
+      navigate('*');
     }
   };
 
@@ -106,22 +106,20 @@ export default function ProfileUpdate() {
       <div className="profile-update-container">
         <div className="profile-update-box">
           <h2>Update Profile</h2>
-          <form>
+          <form encType="multipart/form-data">
             <p className="error">{errors.non_field_errors}</p>
-            <div className="form-group">
-              <div className="profile-pic-container" onClick={handleProfilePicClick}>
-                <img src={profilePic} alt="Profile" />
-              </div>
+            <div className='profile-pic-container'>
+              <img className="profile-pic-update" onClick={handleProfilePicClick} src={profilePic} alt="Profile" />
               <input
                 id="profilePicInput"
                 type="file"
                 onChange={(e) => setProfilePic(e.target.files[0])}
-                style={{ display: 'none' }} 
+                style={{ display: 'none' }}
               />
               <div className='profile-pic-actions'>
                 <button type="button" id="remove-button" onClick={handleRemoveProfilePic}>
                   Remove
-               </button>
+                </button>
               </div>
               <p className="error">{errors.profile_pic}</p>
             </div>
@@ -180,5 +178,5 @@ export default function ProfileUpdate() {
         </div>
       </div>
     </main>
-    );
-  }
+  );
+}

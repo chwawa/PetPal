@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
     name = models.CharField(max_length=255)
-    profile_pic = models.FileField(upload_to='', null=True, blank=True)
+    profile_pic = models.FileField(upload_to='P3/backend/media/', null=True, blank=True)
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=15, null=True, blank=True)
     location = models.CharField(max_length=255, null=True, blank=True)

@@ -1,18 +1,29 @@
+import React from "react";
+import logo from "../../assets/logo.svg";
+import bell from "../../assets/notif_bell.svg";
 import { Link, useLocation } from "react-router-dom";
-
-import logo from "../../assets/logo.svg"
-import bell from "../../assets/notif_bell.svg"
 import Dropdown from 'react-bootstrap/Dropdown';
-import "./Navbar.css"
+import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 
 function Navbar() {
-
     const location = useLocation();
     const currURL = location.pathname;
     const user = "Shelter" // change to get user type from context or local storage or something
     const id = localStorage.getItem("id");
     const Navigate = useNavigate();
+
+    const handleDeleteAccount = async () => {
+    const accessToken = localStorage.getItem('access_token');
+    const response = await fetch(`http://127.0.0.1:8000/accounts/user/${id}/deletion/`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    navigate('/')
+  };
 
     return (
       <>
@@ -54,17 +65,17 @@ function Navbar() {
               </Dropdown.Item>
                 
               <Dropdown.Divider />
-              <Dropdown.Item>Log Out</Dropdown.Item>
-            </Dropdown.Menu>
+              <Dropdown.Item onClick={handleDeleteAccount}>
+              Delete Account
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => {localStorage.setItem('access_token', ''); 
+                                          navigate('/');}}>
+              Log Out
+            </Dropdown.Item>
           </Dropdown>
 
           <Link to="/notifications" className={currURL === "/notifications" ? "active link notif_button float-right" : "link notif_button float-right"}>
             <img src={bell} />
           </Link>
 
-        </header>
-      </>
-    );
-  }
-  
-  export default Navbar;
+export default Navbar;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './ShelterComment.css'; // Adjust the path based on your project structure
+import './ShelterComment.css'; 
 
-export default function ShelterCommentCreation({ commenter, text }) {
+export default function ShelterComment({ commenter, text, rating }) {
   const [name, setName] = useState('');
   const [profilePic, setProfilePic] = useState(null);
 
@@ -37,8 +37,21 @@ export default function ShelterCommentCreation({ commenter, text }) {
       {profilePic && <img src={profilePic} alt={`${name}'s profile pic`} />}
       <div className='userInfo'>
         <p id="name">{name}</p>
+        <div className="rating-container">
+          {[...Array(5)].map((_, index) => (
+            <span
+              key={index}
+              className={index < rating ? 'star-filled' : 'star-empty'}
+            >
+              ★
+            </span>
+          ))}
+        </div>
         <p className='commentText'>{text}</p>
       </div>
     </div>
   );
 }
+
+
+
