@@ -74,7 +74,7 @@ export default function CreateUpdatePetForm({method}) {
             formData.append('size', pet.size)
             formData.append('species', pet.species)
             formData.append('shelter', shelterID)
-            if (picture) {
+            if (pet.picture) {
                 var fileInput = document.getElementById('picture')
                 formData.append('picture', fileInput.files[0]);
             }
