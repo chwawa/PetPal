@@ -11,8 +11,10 @@ export default function Notification() {
     const [notifications, setNotifications] = useState([]);
     const accessToken = localStorage.getItem('access_token');
 
+    const [page, setPage] = useState(1)
+
     useEffect(() => {
-        fetch(`${url}/notifications`, {
+        fetch(`${url}/notifications?page=${page}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
