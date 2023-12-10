@@ -24,3 +24,8 @@
     grid-template-columns: auto 45px;
     column-gap: 10px;
 }
+
+.comments-container {
+    max-height: 165px;
+    overflow: scroll;
+}

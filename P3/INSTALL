@@ -1,6 +1,45 @@
 # This text file should explain how to deploy your website.
 
-# You should write detailed description on:
+Prerequisites
+######################################################
+1. Clone our repository from Markus.
 
-# 1. All the packages you need to install
-# 2. How to configure various servers (e.g., Nginx, Apache, etc)
+
+Setting Up the Backend
+######################################################
+1. Open a terminal. Make sure your current working directory is the cloned repository from the prerequisite step.
+2. Run the following commands in the terminal to download the required packages and set up the backend:
+cd backend
+
+virtualenv venv
+source venv/bin/activate
+
+pip3 install django
+
+python3 -m pip install --upgrade pip
+python3 -m pip install --upgrade Pillow
+
+pip3 install djangorestframework
+pip3 install djangorestframework-simplejwt
+pip3 install setuptools
+pip3 install django-filter
+python3 -m pip install django-cors-headers
+
+python3 ./manage.py makemigrations
+python3 ./manage.py migrate
+3. Now, in the same terminal, run `python3 ./manage.py runserver` to start the backend server.
+
+
+Setting Up the Frontend
+######################################################
+1. Open a terminal. Make sure your current working directory is the cloned repository from the prerequisite step.
+2. Navigate to the frontend folder by running `cd frontend`
+3. Run `npm install` to download the required packages.
+4. Run `npm start` to start the frontend server.
+
+
+How to Deploy Our Website
+######################################################
+We were only able to deploy our frontend on Vercel before the deadline. The deployment is visible here: https://pet-pal-six.vercel.app/. 
+Since our backend was not deployed, there will be no data available on the site. Login/signup features are not usable either.
+We wanted to deploy our backend on an AWS EC2 instance and then, from our frontend, fetch data from the deployed backend, but we ran out of time.
