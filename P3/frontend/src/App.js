@@ -21,7 +21,7 @@ import UpdatePet from './pages/UpdatePet';
 import ShelterBlog from './pages/ShelterBlog/ShelterBlog';
 import NewPost from './pages/NewPost/NewPost'; 
 
-import Notification from './pages/Notification';
+import Notification from './pages/Notifications';
 
 function App() {
   return (
@@ -58,6 +58,8 @@ function App() {
           <Route path="shelters/" element={<ShelterListings />} />
           <Route path="profile/:id" element={<ProfileView />} />
           <Route path="profile/update/:id" element={<ProfileUpdate />} />
+          
+          <Route path="notifications" element={<Notification />}/>
         </Route>
 
         {/* <Route path="" element={<InitialPageLayout />} >
