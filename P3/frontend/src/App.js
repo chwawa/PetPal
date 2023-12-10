@@ -22,6 +22,8 @@ import UpdatePet from './pages/UpdatePet';
 import ShelterBlog from './pages/ShelterBlog/ShelterBlog';
 import NewPost from './pages/NewPost/NewPost'; 
 
+import Notification from './pages/Notifications';
+
 function App() {
   return (
     <BrowserRouter>
@@ -51,7 +53,7 @@ function App() {
           <Route path="blog/:id" element={<ShelterBlog />} />
           <Route path="blog/:id/newpost" element={<NewPost />} />
 
-
+          <Route path="notifications" element={<Notification />}/>
 
           {/* SEEKER LINKS */}
           
@@ -59,6 +61,8 @@ function App() {
           <Route path="shelters/" element={<ShelterListings />} />
           <Route path="profile/:id" element={<ProfileView />} />
           <Route path="profile/update/:id" element={<ProfileUpdate />} />
+          
+          <Route path="notifications" element={<Notification />}/>
         </Route>
 
         {/* <Route path="" element={<InitialPageLayout />} >
