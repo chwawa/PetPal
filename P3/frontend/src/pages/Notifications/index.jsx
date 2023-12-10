@@ -24,7 +24,6 @@ export default function Notification() {
             setNotifications(json.results)
         })
     }, []);
-    console.log({notifications});
 
     return (
         <main>
