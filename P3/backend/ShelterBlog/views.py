@@ -44,7 +44,7 @@ class ShelterBlogDetailView(APIView):
     
 
 class ShelterBlogUpdateView(APIView):
-    permission_classes = [IsAuthenticated, IsShelter]
+    permission_classes = [IsAuthenticated, IsShelter | IsSeeker]
 
     def get_object(self, shelterblog_id):
         return get_object_or_404(ShelterBlog, pk=shelterblog_id)

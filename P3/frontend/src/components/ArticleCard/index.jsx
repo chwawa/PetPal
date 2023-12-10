@@ -13,27 +13,39 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import "./ArticleCard.css"
 
 
-export default function ArticleCard({cardTitle, cardBody, fetchedLikes, fetchedClicked, articleID}) {
+export default function ArticleCard({cardTitle, cardBody, numLikes, articleID}) {
     const currUserId = localStorage.getItem('id');
     const accessToken = localStorage.getItem('access_token');
     const { id } = useParams()
     const url = "http://127.0.0.1:8000"
 
-    const [likes, setLikes] = useState(fetchedLikes); // set to num of likes from fetch
-    const [isClicked, setIsClicked] = useState(fetchedClicked); //set to true or false from fetch
+    const [likes, setLikes] = useState(numLikes); // set to num of likes from fetch
+    const [isClicked, setIsClicked] = useState(false); 
     const [showComments, setShowComments] = useState(false);
     const [comments, setComments] = useState([])
     const [page, setPage] = useState(1);
     const [next, setNext] = useState(true);
+    localStorage.setItem(`like${articleID}`, likes)
 
     const handleLike = () => {
-        if (isClicked) {
-            setLikes(likes - 1);
+        setIsClicked(true);
+        setLikes(likes + 1);
+        localStorage.setItem(`like${articleID}`, likes + 1)
 
-        } else {
-            setLikes(likes + 1);
-        }
-        setIsClicked(!isClicked);
+        // fetch(`${url}/shelterblog/${id}/blog/${articleID}/update/`, {
+        //     method: "PUT",
+        //     headers: {
+        //         'Authorization': `Bearer ${accessToken}`,
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: {
+        //         likes: likes,
+        //     }
+        // })
+        
+        setTimeout(() => {
+            setIsClicked(false)
+        }, 800);
     };
 
     const fetchComments = () => {
@@ -41,7 +53,7 @@ export default function ArticleCard({cardTitle, cardBody, fetchedLikes, fetchedC
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/json',
             },
         })
         .then(res => res.json())

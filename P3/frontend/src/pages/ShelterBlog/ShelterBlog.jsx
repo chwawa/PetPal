@@ -69,8 +69,8 @@ export default function ShelterBlog() {
                             <ArticleCard 
                                 cardTitle={article.title}
                                 cardBody={<pre>{article.content}</pre>}
-                                fetchedLikes={article.likes.length}
-                                fetchedClicked={false}
+                                numLikes={parseInt(localStorage.getItem(`like${article.id}`))}
+                                // numLikes={article.likes}
                                 articleID={article.id}
                             />
                         ))}
