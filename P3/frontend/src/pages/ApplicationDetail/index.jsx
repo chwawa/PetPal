@@ -5,7 +5,6 @@ import { React, useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/esm/Button';
 import Badge from 'react-bootstrap/Badge';
-import Chat from "../../components/Chat";
 import ApplicationComment from "../../components/ApplicationComment";
 import ApplicationCommentCreation from "../../components/ApplicationCommentCreation";
 
@@ -84,7 +83,7 @@ export default function ApplicationDetail() {
                     <Card.Body>
                         <Card.Title><h1>Chat</h1></Card.Title>
                         <div className="form-group">
-                            <div className="comments-container">
+                            <div className="scroll">
                                 {comments?.map((comment) => (
                                 <ApplicationComment text={comment.text} commenter={comment.commenter} creation_time={comment.creation_time} />
                                 ))}

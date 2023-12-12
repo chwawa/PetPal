@@ -18,6 +18,7 @@ import ProfileUpdate from './pages/ProfileUpdate';
 import ProfileView from './pages/ProfileView';
 import CreatePet from './pages/CreatePet';
 import UpdatePet from './pages/UpdatePet';
+import ApplicationsPet from './pages/ApplicationsPet';
 
 import ShelterBlog from './pages/ShelterBlog/ShelterBlog';
 import NewPost from './pages/NewPost/NewPost'; 
@@ -40,14 +41,17 @@ function App() {
           <Route path="mypets/" element={<MyPets />} />
 
           <Route path="pets/:pid/application" element={<ApplicationCreate />} />
-          <Route path="pets/:pid/application/update" element={<ApplicationUpdate />} />
+          {/* <Route path="pets/:pid/application/update" element={<ApplicationUpdate />} /> */}
           <Route path="applications/" element={<MyApplications />} />
           <Route path="applications/:aid" element={<ApplicationDetail />} />
+          <Route path="applications/:aid/update" element={<ApplicationUpdate />} />
 
 
           {/* SHELTER LINKS */}
           <Route path="mypets/new" element={<CreatePet />} />
           <Route path="mypets/:id" element={<UpdatePet />} />
+
+          <Route path="mypets/:id/applications" element={<ApplicationsPet />} />
 
 
           <Route path="blog/:id" element={<ShelterBlog />} />

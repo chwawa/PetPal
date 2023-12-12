@@ -20,6 +20,16 @@
     margin: auto;
 }
 
+.scroll {
+  height: 20rem;
+  width: 100%;
+  border: 1px; 
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow-anchor: auto !important;
+}
+
 
 
 .profile-update-container {
