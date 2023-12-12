@@ -10,7 +10,7 @@ export default function MyPets() {
     let navigate = useNavigate();
     const [pets, setPets] = useState([]);
     const url = 'http://127.0.0.1:8000'; // change after deployment
-    const shelterID = 1; // change to current shelter
+    const shelterID = localStorage.getItem('id');
 
     useEffect(() => {
         fetch(`${url}/pets/?shelter=${shelterID}`)

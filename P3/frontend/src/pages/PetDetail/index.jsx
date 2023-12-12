@@ -12,6 +12,12 @@ export default function PetDetail() {
     let navigate = useNavigate();
     const { id } = useParams();
     const [pet, setPet] = useState("");
+    const seekerID = localStorage.getItem('id');
+    const accessToken = localStorage.getItem('access_token');
+    const [application, setApplication] = useState([]);
+    const [notApplied, setNotApplied] = useState(true);
+    const [applied, setApplied] = useState(false);
+
     const url = 'http://127.0.0.1:8000' // change after deployment
 
     useEffect(() => {
@@ -20,7 +26,24 @@ export default function PetDetail() {
         .then(json => {
             setPet(json);
         })
+
+        fetch(`${url}/applications/applications/?applicant=${seekerID}&pet=${id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            },
+        })
+        .then(res => res.json())
+        .then(json => {
+            setApplication(json.results);
+            if (json.results.length != 0) {
+                setNotApplied(false);
+                setApplied(true);
+            }
+        })
     }, []);
+
+
 
     return (
         <main>
@@ -65,7 +88,15 @@ export default function PetDetail() {
 
                         <div className='button-container'>
                             <Button variant='light' onClick={() => navigate(`/profile/${pet.shelter}`)}>View Shelter</Button>
-                            <Button variant='light' onClick={() => navigate(`/pets/${pet.id}/application`)} className='adopt-button'>Adopt</Button>
+                            
+                            {notApplied && (
+                                <Button variant='light' onClick={() => navigate(`/pets/${pet.id}/application`)} className='adopt-button'>Adopt</Button>
+                            )}
+
+                            {applied && (
+                                <Button variant='light' onClick={() => navigate(`/applications/${application[0].id}`)} className='adopt-button'>View Application</Button>
+                            )}
+                            
                         </div>
                         
                     </Card.Body>

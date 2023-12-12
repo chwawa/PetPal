@@ -75,7 +75,7 @@ class UserDetailViewComments(generics.RetrieveAPIView):
     def get_object(self):
         profile = get_object_or_404(CustomUser, id=self.kwargs['pk'])
         return profile
-    
+
 
 class ListView(generics.ListAPIView):
     serializer_class = UserDetailSerializer
@@ -85,6 +85,13 @@ class ListView(generics.ListAPIView):
         if self.kwargs['type'] != 'shelters':
             raise PermissionDenied("Access is not allowed.")
         return CustomUser.objects.filter(user_type='shelter')
+    
+
+class ListViewAll(generics.ListAPIView):
+    serializer_class = UserDetailSerializer
+    def get_queryset(self):
+        return CustomUser.objects.all()
+
 
 class DeleteView(generics.DestroyAPIView):
     serializer_class = UserSerializer
