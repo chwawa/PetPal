@@ -69,7 +69,7 @@ class UserDetailView(generics.RetrieveAPIView):
             raise PermissionDenied("You do not have permission to perform this action.", code=403)
         
 
-class UserDetailView(generics.RetrieveAPIView):
+class UserDetailViewComments(generics.RetrieveAPIView):
     serializer_class = UserDetailSerializer
     # permission_classes = [IsAuthenticated]
     def get_object(self):
