@@ -11,14 +11,14 @@ export default function CreateUpdateApplicationForm({method}) {
     const url = 'http://127.0.0.1:8000' // change after deployment
     const { pid } = useParams();
     const { aid } = useParams();
-    const petID = localStorage.getItem('pid');
+    const seekerID = localStorage.getItem('id');
+    const [pet, setPet] = useState("");
     const accessToken = localStorage.getItem('access_token');
     const [application, setApplication] = useState(
         {
             first_name: "",
             last_name: "",
             email: "",
-            colour: "",
             address: "",
             phone: "",
             applicantOtherPetsDetails: "",
@@ -38,7 +38,7 @@ export default function CreateUpdateApplicationForm({method}) {
     const [show, setShow] = useState(false);
 
     useEffect(() => {
-        fetch(`${url}/applications/${aid}`, {
+        fetch(`${url}/applications/${aid}/`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
@@ -48,6 +48,20 @@ export default function CreateUpdateApplicationForm({method}) {
         .then(json => {
             setApplication(json);
         })
+
+
+        fetch(`${url}/pets/${pid}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            },
+        })
+        .then(res => res.json())
+        .then(json => {
+            setPet(json);
+        })
+        .catch((e) => console.log(`Error: ${e}`))
+        
     }, []);
 
     const handleChange = (event) => {
@@ -66,12 +80,13 @@ export default function CreateUpdateApplicationForm({method}) {
             event.stopPropagation();
             let fetchurl;
             if (method === "post") {
-                fetchurl = `${url}/pets/${pid}/application/`;
+                fetchurl = `${url}/applications/pet/${pid}/`;
             } else {
                 fetchurl = `${url}/applications/${aid}/`;
             }
 
             var formData = new FormData();
+            formData.append('shelter', pet.shelter)
             formData.append('first_name', application.first_name)
             formData.append('last_name', application.last_name)
             formData.append('email', application.email)
@@ -87,8 +102,9 @@ export default function CreateUpdateApplicationForm({method}) {
             formData.append('applicantWork', application.applicantWork)
             formData.append('applicantAllergy', application.applicantAllergy)
             formData.append('applicantDetails', application.applicantDetails)
+            formData.append('applicant', seekerID)
             formData.append('status', application.status)
-            formData.append('pet', petID)
+            formData.append('pet', pid)
 
             await fetch(fetchurl, {
                 method: method,
@@ -163,6 +179,13 @@ export default function CreateUpdateApplicationForm({method}) {
                         <Form.Control id="applicantOtherPetsDetails" value={application.applicantOtherPetsDetails} onChange={(event) => handleChange(event)} type="text" required/>
                         <Form.Control.Feedback type="invalid">
                             Please enter details of other pets in your household.
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group className='form-group'>
+                        <Form.Label className='required'>Are other pets neutered/spayed?</Form.Label>
+                        <Form.Control id="applicantOtherPetsNeutered" value={application.applicantOtherPetsNeutered} onChange={(event) => handleChange(event)} type="text" required/>
+                        <Form.Control.Feedback type="invalid">
+                            Please enter if other pets are neutered/spayed.
                         </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className='form-group'>

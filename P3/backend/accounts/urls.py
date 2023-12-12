@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import LoginView, UserCreateView, UserUpdateView, UserDetailView, ListView, DeleteView
+from .views import LoginView, UserCreateView, UserUpdateView, UserDetailView, ListView, DeleteView, UserDetailViewComments
  
 app_name='accounts'
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('user/<int:pk>/profile/', UserDetailView.as_view(), name='user-detail'),
     path('list/<str:type>/', ListView.as_view(), name='list'),
     path('user/<int:pk>/deletion/', DeleteView.as_view(), name='delete'),
+    path('user/<int:pk>/', UserDetailViewComments.as_view(), name='user-detail-comments'),
 ]

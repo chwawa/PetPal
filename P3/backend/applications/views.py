@@ -88,7 +88,7 @@ class ApplicationUpdateView(APIView):
 
 
 class ShelterApplicationsListView(ListAPIView):
-    permission_classes = [IsShelter]
+    permission_classes = [IsSeeker]
     serializer_class = ApplicationSerializer
     pagination_class = ApplicationPagination
     filter_backends = [DjangoFilterBackend]
@@ -96,7 +96,7 @@ class ShelterApplicationsListView(ListAPIView):
 
     def get_queryset(self):
         user = CustomUser.objects.get(id=self.request.user.id)
-        applications = Application.objects.filter(shelter=user)
+        applications = Application.objects.filter(applicant=user)
 
         ordering = self.request.query_params.get('sort', 'creation_time')
         if ordering:

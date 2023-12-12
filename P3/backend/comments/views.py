@@ -47,7 +47,7 @@ class ShelterBlogCommentListCreateAPIView(ListCreateAPIView):
 class ApplicationCommentListCreateAPIView(ListCreateAPIView):
     serializer_class = ApplicationCommentSerializer
     permission_classes = [IsAuthenticated]
-    pagination_class = SetPaginationComments
+    # pagination_class = SetPaginationComments
 
     def perform_create(self, serializer):
         application = Application.objects.get(id=self.kwargs['pk'])
@@ -72,7 +72,7 @@ class ApplicationCommentListCreateAPIView(ListCreateAPIView):
     def get_queryset(self):
         application = Application.objects.get(id=self.kwargs['pk'])
         if self.request.user == application.applicant or self.request.user == application.pet.shelter:
-            return ApplicationComment.objects.filter(application=application).order_by('-creation_time')
+            return ApplicationComment.objects.filter(application=application).order_by('creation_time')
         else:
             raise PermissionDenied("You do not have permission to perform this action.")
         
