@@ -6,32 +6,75 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/esm/Button';
 import Badge from 'react-bootstrap/Badge';
 import Chat from "../../components/Chat";
+import ApplicationComment from "../../components/ApplicationComment";
+import ApplicationCommentCreation from "../../components/ApplicationCommentCreation";
 
 import "./ApplicationDetail.css"
 
 
 export default function ApplicationDetail() {
     let navigate = useNavigate();
-    const { id } = useParams();
+    const { aid } = useParams();
     const [application, setApplication] = useState("");
-    const [chat, setChat] = useState([]);
+    const [comments, setComments] = useState([]);
+    const accessToken = localStorage.getItem('access_token');
     const url = 'http://127.0.0.1:8000' // change after deployment
 
     useEffect(() => {
-        fetch(`${url}/applications/${id}`)
+
+        const accessToken = localStorage.getItem('access_token');
+        const id = localStorage.getItem('id');
+
+        fetch(`${url}/accounts/user/${id}/`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+        })
+        .then(res => {
+          if (!res.ok) {
+            navigate('*');
+          }
+          return res.json();
+        })
+
+        fetch(`${url}/applications/${aid}/`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            },
+        })
         .then(res => res.json())
         .then(json => {
             setApplication(json);
+            console.log(json);
         })
+        fetchComments();
     }, []);
 
-    useEffect(() => {
-        fetch(`${url}/comments/application/${id}`)
-        .then(res => res.json())
-        .then(json => {
-            setChat(json.results);
-        })
-    }, []);
+    const fetchComments = async () => {
+        try {
+          const accessToken = localStorage.getItem('access_token');
+          const response = await fetch(`${url}/comments/application/${aid}/`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
+            },
+          });
+    
+          if (response.ok) {
+            const allComments = await response.json();
+            setComments(allComments);
+            console.log(allComments);
+          } else {
+            throw new Error('Failed to fetch application comments');
+          }
+        } catch (error) {
+          setComments([]);
+        }
+      };
 
     return (
         <main>
@@ -40,17 +83,17 @@ export default function ApplicationDetail() {
                 <Card className="application-detail-layout">
                     <Card.Body>
                         <Card.Title><h1>Chat</h1></Card.Title>
-                        { chat == [] 
-                            ? (<div className="articles-container">
-                                    {chat.map(c => (
-                                        <Chat 
-                                            commenter={c.commenter}
-                                            text={c.text}
-                                        />
-                                    ))}
-                                </div>)
-                            : <h3></h3>
-                        }
+                        <div className="form-group">
+                            <div className="comments-container">
+                                {comments?.map((comment) => (
+                                <ApplicationComment text={comment.text} commenter={comment.commenter} creation_time={comment.creation_time} />
+                                ))}
+                            </div>
+                            <p></p>
+                        </div>
+                        <div className="form-group">
+                            <ApplicationCommentCreation application={aid} />
+                        </div>
                     </Card.Body>
                 </Card>
 
@@ -107,7 +150,7 @@ export default function ApplicationDetail() {
 
                             <b>Details of other pets in household (breed, age, gender and personality)</b>
                             <Card.Text>
-                                {application.applicantOtherPetDetails}
+                                {application.applicantOtherPetsDetails}
                             </Card.Text>
 
                             <b>Will the animal be left alone for long periods of time?</b>

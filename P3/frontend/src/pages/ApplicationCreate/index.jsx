@@ -13,7 +13,6 @@ import "./ApplicationCreate.css";
 export default function CreateApplication() {
     let navigate = useNavigate();
     const url = 'http://127.0.0.1:8000' // change after deployment
-    const shelterID = 1;
     
     return (
         <main>

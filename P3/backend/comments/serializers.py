@@ -8,7 +8,7 @@ class ShelterCommentSerializer(serializers.ModelSerializer):
 class ApplicationCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = ApplicationComment
-        fields = ['text']
+        fields = ['text', 'commenter', 'creation_time']
 
 class ShelterBlogCommentSerializer(serializers.ModelSerializer):
     class Meta:

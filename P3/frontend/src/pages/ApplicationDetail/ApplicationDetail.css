@@ -20,3 +20,75 @@
     margin: auto;
 }
 
+
+
+.profile-update-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .profile-update-box {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center; 
+  }
+  
+  .profile-update-box h2 {
+    color: #333;
+  }
+  
+  .profile-image {
+    display: block;
+    margin: 0 auto;
+    width: 150px; 
+    height: 150px; 
+    object-fit: cover; 
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+  
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    resize: vertical;
+  }
+  
+  .form-group textarea {
+    height: 80px;
+  }
+  
+  .info-grid {
+    display: grid;
+    grid-template-columns: 100px auto;
+    column-gap: 15px;
+    row-gap: 10px;
+  }
+  
+  .pet-grid {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
