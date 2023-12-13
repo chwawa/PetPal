@@ -2,4 +2,10 @@
     width: 60%;
     margin: auto;
     text-align: left;
+    margin-top: 1rem;
+}
+
+.dropdowns {
+    width: 60%;
+    margin: auto;
 }
