@@ -10,7 +10,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import "./PetCard.css"
 import { useNavigate } from 'react-router-dom';
 
-function PetCard( { petID, link, cardImage, cardTitle, cardSubtitle, cardText, actionButtons } ) {
+function PetCard( { petID, link, cardImage, cardTitle, cardSubtitle, cardText, actionButtons, aButton, aID } ) {
   let navigate = useNavigate();
 
   const [show, setShow] = useState(false);
@@ -39,9 +39,15 @@ function PetCard( { petID, link, cardImage, cardTitle, cardSubtitle, cardText, a
           <Card.Text>{cardText}</Card.Text>
           {actionButtons 
             ? <>
-                <Button size="sm" style={{ marginRight: 5, marginBottom: 5 }} variant="warning" onClick={() => console.log('hi')}>View Apps</Button>
+                <Button size="sm" style={{ marginRight: 5, marginBottom: 5 }} variant="warning" onClick={() => navigate(`${petID}/applications`)}>View Applications</Button>
                 <Button size="sm" style={{ marginBottom: 5 }} variant="light" onClick={() => navigate(`/mypets/${petID}`)}>Edit</Button>
                 <FontAwesomeIcon icon={faTrashCan} className='trash float-right' onClick={() => setShow(true) }/>
+              </>
+            : null}
+            {aButton 
+            ? <>
+                <Button size="sm" style={{ marginBottom: 5 }} variant="light" onClick={() => navigate(`/applications/${aID}/`)}>View</Button>
+                <Button size="sm" style={{ marginBottom: 5 }} variant="light" onClick={() => navigate(`/applications/${aID}/update`)}>Update</Button>
               </>
             : null}
         </Card.Body>

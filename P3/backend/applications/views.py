@@ -87,19 +87,31 @@ class ApplicationUpdateView(APIView):
         return Response({'error': 'Permission denied'}, status=status.HTTP_403_FORBIDDEN)
 
 
-class ShelterApplicationsListView(ListAPIView):
-    permission_classes = [IsShelter]
+class ApplicationsListView(ListAPIView):
+    permission_classes = [IsSeeker | IsShelter]
     serializer_class = ApplicationSerializer
     pagination_class = ApplicationPagination
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['status']
+    filterset_fields = ['status', 'shelter', 'pet', 'applicant']
 
     def get_queryset(self):
         user = CustomUser.objects.get(id=self.request.user.id)
-        applications = Application.objects.filter(shelter=user)
+        if user.user_type == 'seeker':
+            applications = Application.objects.filter(applicant=user)
 
-        ordering = self.request.query_params.get('sort', 'creation_time')
-        if ordering:
-            applications = applications.order_by(ordering)
+            ordering = self.request.query_params.get('sort', 'creation_time')
+            if ordering:
+                applications = applications.order_by(ordering)
 
-        return applications
+            # return applications
+            return Application.objects.all()
+        else:
+            applications = Application.objects.filter(shelter=user)
+
+            ordering = self.request.query_params.get('sort', 'creation_time')
+            if ordering:
+                applications = applications.order_by(ordering)
+
+            # return applications
+            return Application.objects.all()
+

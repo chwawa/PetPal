@@ -27,10 +27,9 @@ class ListCreateNotification(ListCreateAPIView):
         order = self.request.query_params.get('order')
         if filter is not None:
             if filter == 'read':
-                is_read = True
+                queryset = queryset.filter(is_read=True)
             elif filter == 'unread':
-                is_read = False
-            queryset = queryset.filter(is_read=is_read)
+                queryset = queryset.filter(is_read=False)
         if order is not None:
             if order == 'latest':
                 order_by = '-creation_time'

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './ChatCreation.css';
+import './ApplicationCommentCreation.css';
 
-const ChatCreation = ({ application }) => {
+const ApplicationCommentCreation = ({ application }) => {
   const [name, setName] = useState('');
   const [profilePic, setProfilePic] = useState(null);
   const [commentText, setCommentText] = useState('');
@@ -15,7 +15,7 @@ const ChatCreation = ({ application }) => {
         const accessToken = localStorage.getItem('access_token');
         const id = localStorage.getItem('id');
 
-        const response = await fetch(`${url}/accounts/user/${id}/profile/`, {
+        const response = await fetch(`${url}/accounts/user/${id}/`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${accessToken}`,
@@ -52,7 +52,7 @@ const ChatCreation = ({ application }) => {
         body: JSON.stringify({
           commenter: userId,
           application: application,
-          text: commentText,
+          text: commentText
         }),
       });
 
@@ -82,7 +82,7 @@ const ChatCreation = ({ application }) => {
   );
 };
 
-export default ChatCreation;
+export default ApplicationCommentCreation;
 
 
 

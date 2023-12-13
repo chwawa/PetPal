@@ -47,7 +47,7 @@ class ShelterBlogCommentListCreateAPIView(ListCreateAPIView):
 class ApplicationCommentListCreateAPIView(ListCreateAPIView):
     serializer_class = ApplicationCommentSerializer
     permission_classes = [IsAuthenticated]
-    pagination_class = SetPaginationComments
+    # pagination_class = SetPaginationComments
 
     def perform_create(self, serializer):
         application = Application.objects.get(id=self.kwargs['pk'])

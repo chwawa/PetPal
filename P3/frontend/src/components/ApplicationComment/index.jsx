@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './Chat.css'; 
+import './ApplicationComment.css'; 
 
-export default function Chat({ commenter, text }) {
+export default function ApplicationComment({ commenter, text, creation_time }) {
   const [name, setName] = useState('');
   const [profilePic, setProfilePic] = useState(null);
 
@@ -9,7 +9,7 @@ export default function Chat({ commenter, text }) {
     const fetchUserData = async () => {
       try {
         const accessToken = localStorage.getItem('access_token');
-        const response = await fetch(`http://127.0.0.1:8000/accounts/user/${commenter}/profile/`, {
+        const response = await fetch(`http://127.0.0.1:8000/accounts/user/${commenter}/`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -21,6 +21,7 @@ export default function Chat({ commenter, text }) {
           const userData = await response.json();
           setName(userData.name);
           setProfilePic(userData.profile_pic);
+          console.log(userData.name)
         } else {
           console.error('Error fetching user data:', response.status);
         }
@@ -35,6 +36,7 @@ export default function Chat({ commenter, text }) {
   return (
     <div className='commentContainer'>
       {profilePic && <img src={profilePic} alt={`${name}'s profile pic`} />}
+      <div className='time'>{creation_time}</div>
       <div className='userInfo'>
         <p id="name">{name}</p>
         <p className='commentText'>{text}</p>
@@ -42,3 +44,6 @@ export default function Chat({ commenter, text }) {
     </div>
   );
 }
+
+
+
