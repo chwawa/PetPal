@@ -139,7 +139,7 @@ export default function PetDetail() {
         <div className="profile-update-box"> */}
           <h2>{name}'s Profile</h2>
           <hr></hr>
-          <img className='profile-image' src={profilePic} alt="No Profile Picture"/>
+          <img className='profile-image' src={profilePic} alt=""/>
           
           <Card style={{marginBottom: "30px"}}>
               <Card.Body>
