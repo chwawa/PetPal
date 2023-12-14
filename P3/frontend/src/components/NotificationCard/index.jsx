@@ -9,10 +9,17 @@ export default function NotificationCard( {notifiID, link, message, read, timeSt
     const url = 'http://127.0.0.1:8000';
     const accessToken = localStorage.getItem('access_token');
     const [pet, setPet] = useState("");
-    const id = link.split('/')[2];
+    
+    if (link.startsWith('/comments/shelter')) {
+      var id = link.split('/')[3];
+    } else {
+      var id = link.split('/')[2];
+    }
+    
     const [error, setError] = useState(false)
 
     useEffect(() => {
+      console.log(link,id)
       fetch(`${url}/pets/${id}/`, {
         method: "GET",
         headers: {
@@ -28,7 +35,10 @@ export default function NotificationCard( {notifiID, link, message, read, timeSt
     }, [])
 
     const convertLink = (link) => {
-      if (link.startsWith("/comments")) {
+      if (link.startsWith("/comments/shelter")) {
+        return `/profile/${id}`
+        
+      } else if (link.startsWith("/comments")) {
         // `applications/:aid`
         return `/applications/${id}`
 
