@@ -26,7 +26,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 #         new_app = serializer.save(applicant=self.request.user, shelter=Pet.objects.get(id=pet_id).shelter)
 
 class ApplicationPagination(PageNumberPagination):
-    page_size = 10
+    page_size = 9
     page_size_query_param = 'page_size'
     max_page_size = 100
 
@@ -92,26 +92,26 @@ class ApplicationsListView(ListAPIView):
     serializer_class = ApplicationSerializer
     pagination_class = ApplicationPagination
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['status', 'shelter', 'pet', 'applicant']
+    filterset_fields = ['status', 'shelter', 'pet', 'applicant', 'first_name', 'last_name']
 
     def get_queryset(self):
         user = CustomUser.objects.get(id=self.request.user.id)
         if user.user_type == 'seeker':
-            applications = Application.objects.filter(applicant=user)
+            applications = Application.objects.all()
 
-            ordering = self.request.query_params.get('sort', 'creation_time')
+            ordering = self.request.query_params.get('sort')
             if ordering:
                 applications = applications.order_by(ordering)
 
             # return applications
-            return Application.objects.all()
+            return applications
         else:
-            applications = Application.objects.filter(shelter=user)
+            applications = Application.objects.all()
 
-            ordering = self.request.query_params.get('sort', 'creation_time')
+            ordering = self.request.query_params.get('sort')
             if ordering:
                 applications = applications.order_by(ordering)
 
             # return applications
-            return Application.objects.all()
+            return applications
 
