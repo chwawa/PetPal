@@ -2,6 +2,7 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/esm/Button';
 import AreYouSureModal from '../AreYouSureModal';
+import { Modal } from 'react-bootstrap';
 import { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,15 +15,34 @@ function PetCard( { petID, link, cardImage, cardTitle, cardSubtitle, cardText, a
   let navigate = useNavigate();
 
   const [show, setShow] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const accessToken = localStorage.getItem('access_token');
 
   const handleCardClick = () => {
-    if (link) {
+    if (!accessToken) {
+      setShowLoginModal(true);
+    } else if (link) {
       navigate(link)
     }
   }
 
   return (
     <>
+      <Modal
+        show={showLoginModal}
+        setShow={setShowLoginModal}
+      >
+        <Modal.Header closeButton>
+            <Modal.Title>Hi!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>You must be logged in to adopt pets.</Modal.Body>
+        <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowLoginModal(false)}>Cancel</Button>
+            <Button variant="light" className="pink-button" onClick={() => navigate("/login")}>Log In / Sign Up</Button>
+        </Modal.Footer>
+      </Modal>
+
       <AreYouSureModal 
         title={`Delete ${cardTitle}?`} 
         body="They'll be gone forever!"
