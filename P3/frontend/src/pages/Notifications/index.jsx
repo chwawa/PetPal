@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Dropdown, Container} from "react-bootstrap";
+import { Dropdown, Container, Button} from "react-bootstrap";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NotificationCard from "../../components/NotificationCard";
@@ -91,10 +91,10 @@ export default function Notification() {
                 </div>
                 <p>
                 { page > 1 ?
-                    <button className="nav-button" variant="light" onClick={() => setPage(page - 1)}>Previous</button>
+                    <Button className="nav-button" variant="light" onClick={() => setPage(page - 1)}>Previous</Button>
                     : <></>}
                 { page < totalPages ?
-                    <button className="nav-button" variant="light" onClick={() => setPage(page + 1)}>Next</button>
+                    <Button className="nav-button" variant="light" onClick={() => setPage(page + 1)}>Next</Button>
                     :<></>}
                 </p>
                 <p>Page {page} out of {totalPages}</p></div>

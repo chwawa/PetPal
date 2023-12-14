@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ShelterCommentCreation.css';
+import { Button } from 'react-bootstrap';
 
 const ShelterCommentCreation = ({ shelter }) => {
   const [name, setName] = useState('');
@@ -89,7 +90,7 @@ const ShelterCommentCreation = ({ shelter }) => {
           onChange={(e) => setCommentText(e.target.value)}
           placeholder="Enter your comment"
         />
-        <button onClick={handlePostComment}>Post</button>
+        <Button className="pink-button" variant="light" onClick={handlePostComment}>Post</Button>
       </div>
     </div>
   );
