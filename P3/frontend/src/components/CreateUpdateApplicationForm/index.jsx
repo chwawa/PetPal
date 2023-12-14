@@ -12,6 +12,9 @@ export default function CreateUpdateApplicationForm({method}) {
     const { pid } = useParams();
     const { aid } = useParams();
     const seekerID = localStorage.getItem('id');
+    const userType = localStorage.getItem('usertype');
+    const [isSeeker, setIsSeeker] = useState(false);
+    const [isShelter, setIsShelter] = useState(false);
     const [pet, setPet] = useState("");
     const accessToken = localStorage.getItem('access_token');
     const [application, setApplication] = useState(
@@ -47,6 +50,12 @@ export default function CreateUpdateApplicationForm({method}) {
         .then(res => res.json())
         .then(json => {
             setApplication(json);
+            if (userType == 'seeker') {
+                setIsSeeker(true);
+            }
+            if (userType == 'shelter') {
+                setIsShelter(true);
+            }
         })
 
 
@@ -115,7 +124,13 @@ export default function CreateUpdateApplicationForm({method}) {
                 body: formData,
             })
             .then(() => console.log(application))
-            navigate("/applications");
+            if (isSeeker) {
+                navigate("/applications");        
+            }
+            if (isShelter) {
+                navigate("/mypets");        
+            }
+            
         }
         setValidated(true);
     }

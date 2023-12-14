@@ -6,6 +6,7 @@ class ShelterCommentSerializer(serializers.ModelSerializer):
         fields = ['text', 'commenter', 'rating']
 
 class ApplicationCommentSerializer(serializers.ModelSerializer):
+    creation_time = serializers.DateTimeField(read_only=True, format="%m-%d-%y %H:%M:%S")
     class Meta:
         model = ApplicationComment
         fields = ['text', 'commenter', 'creation_time']
