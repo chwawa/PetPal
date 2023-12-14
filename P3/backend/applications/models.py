@@ -28,4 +28,5 @@ class Application(models.Model):
     ]
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='PENDING')
     creation_time  = models.DateTimeField(auto_now_add=True)
+    
     last_updated = models.DateTimeField(auto_now=True)
