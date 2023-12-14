@@ -28,9 +28,18 @@
   input {
     margin-bottom: 10px; 
   }
+
+  .newClass{
+        background-color: #f6bcc5;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        cursor: pointer;
+        border-radius: 4px;
+  }
   
   button {
-    background-color: #4caf50;
+    background-color: #f6bcc5;
     color: white;
     border: none;
     padding: 8px 12px;
@@ -38,22 +47,6 @@
     border-radius: 4px;
   }
   
-  button:hover {
-    background-color: #45a049;
+  .newClass:hover {
+    background-color: #f9acb9;
   }
-
-  .rating-container {
-    margin-bottom: 10px;
-  }
-  
-  .star-filled {
-    color: gold; 
-    cursor: pointer;
-  }
-  
-  .star-empty {
-    color: #ccc;
-    cursor: pointer;
-  }
-  
-  
