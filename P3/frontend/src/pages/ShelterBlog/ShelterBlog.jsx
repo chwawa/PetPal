@@ -66,6 +66,8 @@ export default function ShelterBlog() {
             { articles != [] 
                 ? (<div className="articles-container">
                         {articles.map(article => (
+                            <>
+                            {localStorage.setItem(`like${article.id}`, 0)}
                             <ArticleCard 
                                 cardTitle={article.title}
                                 cardBody={<pre>{article.content}</pre>}
@@ -73,6 +75,7 @@ export default function ShelterBlog() {
                                 // numLikes={article.likes}
                                 articleID={article.id}
                             />
+                            </>
                         ))}
                     </div>)
                 : <h3>It's empty here!</h3>
