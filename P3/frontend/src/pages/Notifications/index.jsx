@@ -36,7 +36,7 @@ export default function Notification() {
             <div className="dropdowns">
                 <Container style={{padding:0}}>
                     <Row xs="auto">
-                            <Col>
+                        <Col>
                             <Dropdown>
                                 <Dropdown.Toggle
                                     className="sort-button"
@@ -51,8 +51,8 @@ export default function Notification() {
                                     <Dropdown.Item onClick={() => setFilter("unread")}>Unread</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
-                            </Col>
-                            <Col>
+                        </Col>
+                        <Col>
                             <Dropdown>
                                 <Dropdown.Toggle
                                     className="sort-button"
@@ -67,8 +67,8 @@ export default function Notification() {
                                     <Dropdown.Item onClick={() => setSort("oldest")}>Oldest</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
-                            </Col>
-                            </Row>
+                        </Col>
+                    </Row>
                 </Container>
             </div>
 
