@@ -97,7 +97,8 @@ export default function ProfileUpdate() {
   };
 
   const handleRemoveProfilePic = () => {
-    setProfilePic(null);
+    setProfilePic("");
+    setPicture(true);
   };
 
   const handleProfilePicClick = () => {
