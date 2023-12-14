@@ -185,20 +185,22 @@ export default function PetDetail() {
             <textarea id="about" value={about} readOnly />
           </div> */}
 
-          <div className="form-group">
-            <h3>Check Out Our Blog!</h3>
-            <hr></hr>
-            <div className='button-container'>
-              <Button 
-                className='pink-button' 
-                size="lg" 
-                variant='light'
-                onClick={() => navigate(`/blog/${id}`)}
-              >
-                  Blog
-              </Button>
+          {isShelter && (
+            <div className="form-group">
+              <h3>Check Out Our Blog!</h3>
+              <hr></hr>
+              <div className='button-container'>
+                <Button 
+                  className='pink-button' 
+                  size="lg" 
+                  variant='light'
+                  onClick={() => navigate(`/blog/${id}`)}
+                >
+                    Blog
+                </Button>
+              </div>
             </div>
-          </div>
+          )}
 
           {isShelter && (
             <div className="form-group">
