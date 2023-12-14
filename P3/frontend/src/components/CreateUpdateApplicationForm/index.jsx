@@ -88,10 +88,10 @@ export default function CreateUpdateApplicationForm({method}) {
             event.preventDefault();
             event.stopPropagation();
             let fetchurl;
-            if (method === "post") {
+            if (method === "POST") {
                 fetchurl = `${url}/applications/pet/${pid}/`;
             } else {
-                fetchurl = `${url}/applications/${aid}/`;
+                fetchurl = `${url}/applications/${aid}/update/`;
             }
 
             var formData = new FormData();
@@ -128,7 +128,7 @@ export default function CreateUpdateApplicationForm({method}) {
                 navigate("/applications");        
             }
             if (isShelter) {
-                navigate("/mypets");        
+                navigate("/mypets");      
             }
             
         }
@@ -146,7 +146,7 @@ export default function CreateUpdateApplicationForm({method}) {
 
             <p className='back-nav' onClick={() => setShow(true)}>{'< Back'}</p>
 
-            {method == "post"
+            {method == "POST"
                 ? <h2>Create a New Application</h2>
                 : <h2>Update Application</h2>}
             
@@ -261,16 +261,24 @@ export default function CreateUpdateApplicationForm({method}) {
                     </Form.Group>
                     <Form.Group className='form-group'>
                         <Form.Label className='required'>Status</Form.Label>
-                        <Form.Select id="status" value={application.status} onChange={(event) => handleChange(event)} aria-label="Select status">
-                            <option value="PENDING">PENDING</option>
-                            <option value="ACCEPTED">ACCEPTED</option>
-                            <option value="DENIED">DENIED</option>
-                            <option value="WITHDRAWN">WITHDRAWN</option>
-                        </Form.Select>
+                        {isSeeker && (
+                            <Form.Select id="status" value={application.status} onChange={(event) => handleChange(event)} aria-label="Select status">
+                                <option value="PENDING">PENDING</option>
+                                <option value="WITHDRAWN">WITHDRAWN</option>
+                            </Form.Select>
+                        )}
+                        {isShelter && (
+                            <Form.Select id="status" value={application.status} onChange={(event) => handleChange(event)} aria-label="Select status">
+                                <option value="PENDING">PENDING</option>
+                                <option value="ACCEPTED">ACCEPTED</option>
+                                <option value="DENIED">DENIED</option>
+                                
+                            </Form.Select>
+                        )}
                     </Form.Group>
                 </div>
                 
-                { method === "post" 
+                { method === "POST" 
                     ? <Button type="submit" className='pink-button' variant='light'>Create</Button>
                     : <Button type="submit" className='pink-button' variant='light'>Update</Button>}
                 

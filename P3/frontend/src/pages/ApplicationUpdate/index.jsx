@@ -7,7 +7,7 @@ import CreateUpdateApplicationForm from "../../components/CreateUpdateApplicatio
 export default function ApplicationUpdate() {
     return (
         <main>
-            <CreateUpdateApplicationForm method="put" />
+            <CreateUpdateApplicationForm method="PUT" />
         </main>
     )
 }

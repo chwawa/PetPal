@@ -16,7 +16,7 @@ export default function CreateApplication() {
     
     return (
         <main>
-            <CreateUpdateApplicationForm method="post" />
+            <CreateUpdateApplicationForm method="POST" />
         </main>
     )
 }
