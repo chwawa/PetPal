@@ -65,9 +65,11 @@ export default function ShelterBlog() {
 
             { articles != [] 
                 ? (<div className="articles-container">
-                        {articles.map(article => (
+                        { articles.map(article => (
                             <>
-                            {localStorage.setItem(`like${article.id}`, 0)}
+                            {isNaN(localStorage.getItem(`like${article.id}`))
+                            ? localStorage.setItem(`like${article.id}`, 0)
+                            : null}
                             <ArticleCard 
                                 cardTitle={article.title}
                                 cardBody={<pre>{article.content}</pre>}

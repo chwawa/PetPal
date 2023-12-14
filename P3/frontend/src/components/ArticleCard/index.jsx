@@ -25,7 +25,7 @@ export default function ArticleCard({cardTitle, cardBody, numLikes, articleID}) 
     const [comments, setComments] = useState([])
     const [page, setPage] = useState(1);
     const [next, setNext] = useState(true);
-    localStorage.setItem(`like${articleID}`, likes)
+    // localStorage.setItem(`like${articleID}`, likes)
 
     const handleLike = () => {
         setIsClicked(true);
