@@ -2,6 +2,7 @@ import React from 'react';
 import './ShelterItem.css';
 import { useNavigate } from "react-router-dom";
 import shelterProfileImage from '../../assets/pic.jpeg'
+import { Button } from 'react-bootstrap';
 
 export default function ShelterItem({ profile, name, email, phone, location, link}) {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export default function ShelterItem({ profile, name, email, phone, location, lin
           <i className="bi bi-geo-alt"></i>
           <a href={`https://maps.google.com/?q=${location}`}> {location || 'City, Province'}</a>
         </div>
-        <button className="learn-more-button" onClick={() => navigate(link)}>Learn More</button>
+        <Button className="learn-more-button pink-button" size="md" variant="light" onClick={() => navigate(link)}>Learn More</Button>
       </div>
     </div>
   );

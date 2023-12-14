@@ -52,8 +52,8 @@ import ShelterItem from "../../components/ShelterItem";
                     />
                 ))}
             <p>
-                {prev ? <button onClick={() => setPage(page - 1)}>Previous</button> : <button>Previous</button>}
-                {next ? <button onClick={() => setPage(page + 1)}>Next</button> : <button>Next</button>}
+                {prev ? <button className="nav-button" variant="light" onClick={() => setPage(page - 1)}>Previous</button> : <button className="nav-button" variant="light">Previous</button>}
+                {next ? <button className="nav-button" variant="light" onClick={() => setPage(page + 1)}>Next</button> : <button className="nav-button" variant="light">Next</button>}
             </p>
         </div>
         </main>
