@@ -26,6 +26,6 @@
 }
 
 .comments-container {
-    max-height: 165px;
+    max-height: 500px;
     overflow: scroll;
 }
