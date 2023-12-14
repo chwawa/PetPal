@@ -171,6 +171,11 @@ export default function ApplicationDetail() {
                             <Card.Text>
                                 {application.applicantDetails}
                             </Card.Text>
+
+                            <b>Status</b>
+                            <Card.Text>
+                                {application.status}
+                            </Card.Text>
                         </div>                        
                     </Card.Body>
                 </Card>

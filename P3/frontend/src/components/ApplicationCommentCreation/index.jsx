@@ -76,7 +76,7 @@ const ApplicationCommentCreation = ({ application }) => {
           onChange={(e) => setCommentText(e.target.value)}
           placeholder="Enter your message"
         />
-        <button onClick={handlePostComment}>Send</button>
+        <button className='newClass' onClick={handlePostComment}>Send</button>
       </div>
     </div>
   );
