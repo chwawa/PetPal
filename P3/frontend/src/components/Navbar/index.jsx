@@ -59,19 +59,22 @@ function Navbar() {
 
           {/* Change to My Applications is seeker; My Pets if shelter */}
           { localStorage.getItem("access_token")
-            ? ( user == "shelter"
+            ? <>
+              {( user == "shelter"
                 ? <Link to="/mypets" className={currURL.startsWith("/mypets") ? "active link" : "link"}>
                     My Pets
                   </Link>
                 : <Link to="/applications" className={currURL.startsWith("/applications") ? "active link" : "link"}>
                     My Applications
                   </Link>
-              ) 
+              )}
+                <Link to="/shelters" className={(currURL.startsWith("/shelters")) ? "active link" : "link"}>
+                  All Shelters
+                </Link>
+              </> 
             : null}
 
-          <Link to="/shelters" className={(currURL.startsWith("/shelters")) ? "active link" : "link"}>
-            All Shelters
-          </Link>
+          
           
           { localStorage.getItem("access_token")
             ? (<><Dropdown className="myprofile float-right">

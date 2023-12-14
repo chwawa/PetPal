@@ -15,6 +15,7 @@ export default function ProfileUpdate() {
   const [about, setAbout] = useState('');
   const [newPetListingPref, setNewPetListingPref] = useState('yes');
   const [profilePic, setProfilePic] = useState(null);
+  const [picture, setPicture] = useState(false);
   const [errors, setErrors] = useState('');
   const [show, setShow] = useState(false);
   const { id } = useParams();
@@ -71,7 +72,7 @@ export default function ProfileUpdate() {
     formData.append('phone', phone);
     formData.append('location', location);
     formData.append('about', about);
-    if (profilePic) {
+    if (picture) {
       formData.append('profile_pic', profilePic);
     }
     const accessToken = localStorage.getItem('access_token');
@@ -101,6 +102,7 @@ export default function ProfileUpdate() {
 
   const handleProfilePicClick = () => {
     document.getElementById('profilePicInput').click();
+    setPicture(true);
   };
 
   return (
@@ -118,6 +120,7 @@ export default function ProfileUpdate() {
           <h2>Update Profile</h2>
           <form encType="multipart/form-data">
             <p className="error">{errors.non_field_errors}</p>
+
             <div className='profile-pic-container'>
               <img className="profile-pic-update" onClick={handleProfilePicClick} src={profilePic} alt="Profile" />
               <input
@@ -133,6 +136,7 @@ export default function ProfileUpdate() {
               </div>
               <p className="error">{errors.profile_pic}</p>
             </div>
+
             <div className="form-group">
               <label htmlFor="username">Username:</label>
               <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />

@@ -74,7 +74,7 @@ export default function CreateUpdatePetForm({method}) {
             formData.append('size', pet.size)
             formData.append('species', pet.species)
             formData.append('shelter', shelterID)
-            if (pet.picture) {
+            if (picture) {
                 var fileInput = document.getElementById('picture')
                 formData.append('picture', fileInput.files[0]);
             }
@@ -87,7 +87,10 @@ export default function CreateUpdatePetForm({method}) {
                 },
                 body: formData,
             })
-            .then(() => console.log(pet))
+            .then(() => console.log(method))
+
+            setPicture(false)
+            
             navigate("/mypets");
         }
         setValidated(true);

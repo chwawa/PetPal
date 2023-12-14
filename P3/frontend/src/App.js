@@ -61,7 +61,6 @@ function App() {
 
           {/* SEEKER LINKS */}
           
-          
           <Route path="shelters/" element={<ShelterListings />} />
           <Route path="profile/:id" element={<ProfileView />} />
           <Route path="profile/update/:id" element={<ProfileUpdate />} />
